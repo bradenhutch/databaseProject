@@ -8,19 +8,14 @@ import models._
 
 
 @Singleton
-class BlogController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
+class AddressController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
 
   def index = Action {
   	implicit val conn = db.getConnection()
-  	val blog = Blogs(None, "title", None, "text").create
+  	//val user = Address().create
   	println("*********************************************************")
   	conn.close()
-
   	Ok
-  }
-
-  def display = Action {
-    Ok(views.html.index("whut up homez"))
   }
 
 }

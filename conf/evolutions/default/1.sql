@@ -43,16 +43,16 @@ CREATE TABLE address (
 	PRIMARY KEY(addressId)
 );
 
-CREATE TABLE order (
+CREATE TABLE orders (
 	orderId			BIGINT NOT NULL AUTO_INCREMENT,
 	userId			VARCHAR(255) NOT NULL,
 	shippingAddId	VARCHAR(255) NOT NULL,
 	billingAddId	VARCHAR(255) NOT NULL,
 	createdDate		VARCHAR(255) NOT NULL,
 	shippedDate		VARCHAR(255) NOT NULL,
-	subtotal		VARCHAR(255) NOT NULL,
-	tax				VARCHAR(255) NOT NULL,
-	total			VARCHAR(255) NOT NULL,
+	subtotal		DOUBLE NOT NULL,
+	tax				DOUBLE NOT NULL,
+	total			DOUBLE NOT NULL,
 	PRIMARY KEY(orderId)
 );
 
@@ -75,6 +75,7 @@ CREATE TABLE review (
 	reviewDate		VARCHAR(255) NOT NULL,
 	author			VARCHAR(255) NOT NULL,
 	reviewText		TEXT NOT NULL,
+	PRIMARY KEY(reviewId)
 );
 
 CREATE TABLE order_products (
@@ -90,7 +91,7 @@ DROP TABLE IF EXISTS payment_method;
 DROP TABLE IF EXISTS paypal;
 DROP TABLE IF EXISTS credit_card;
 DROP TABLE IF EXISTS address;
-DROP TABLE IF EXISTS order;
+DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS review;
 DROP TABLE IF EXISTS order_products;

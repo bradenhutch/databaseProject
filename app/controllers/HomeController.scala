@@ -17,7 +17,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
    * a path of `/`.
    */
   def index = Action {
-    Ok(views.html.index("Blog Time"))
+    Ok(views.html.index("Chairs 4 Days Homepage"))
   }
 
 }
