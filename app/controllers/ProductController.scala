@@ -8,11 +8,11 @@ import models._
 
 
 @Singleton
-class AddressController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
+class ProductController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
 
   def create = Action {
   	implicit val conn = db.getConnection()
-  	//val user = Address().create
+  	//val user = Product().create
   	println("*********************************************************")
   	conn.close()
   	Ok

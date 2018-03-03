@@ -13,14 +13,14 @@ import javax.inject._
 
 
 /**
- * @param addressId
+ * @param Id
  * @param userId
  * @param streetNumber
  * @param zipCode
  * @param city
  */ 
 
-case class Address(addressId: Option[Long], userId: Long, streetNumber: String, zipCode: String, 
+case class Address(Id: Option[Long], userId: Long, streetNumber: String, zipCode: String, 
 	city: String) {
 
 	def create(implicit db:java.sql.Connection) = {

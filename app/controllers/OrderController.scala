@@ -10,7 +10,7 @@ import models._
 @Singleton
 class OrderController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
 
-  def index = Action {
+  def create = Action {
   	implicit val conn = db.getConnection()
   	//val order = Orders().create
   	println("*********************************************************")

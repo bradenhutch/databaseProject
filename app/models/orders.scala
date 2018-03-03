@@ -13,7 +13,7 @@ import javax.inject._
 
 
 /**
- * @param orderId
+ * @param Id
  * @param userId
  * @param shippingAddId
  * @param billingAddId
@@ -24,7 +24,7 @@ import javax.inject._
  * @param total
  */ 
 
-case class Orders(orderId: Option[Long], userId: Long, shippingAddId: Long, billingAddId: Long,
+case class Orders(Id: Option[Long], userId: Long, shippingAddId: Long, billingAddId: Long,
 	createdDate: String, dateCreated: String, subtotal: Double, tax: Double, total: Double) {
 
 	def create(implicit db:java.sql.Connection) = {
