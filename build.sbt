@@ -1,20 +1,21 @@
-name         := "databaseProject"
+name := """databaseProject"""
 
-version      := "1.0-SNAPSHOT"
-
-scalaVersion := "2.11.7"
-
-TwirlKeys.templateImports += "dependencies._"
-
-libraryDependencies ++= Seq(
-	// Add your project dependencies here,
-	evolutions,
-	jdbc,
-	ws,
-	"mysql" % "mysql-connector-java" % "5.1.10",
-	"com.typesafe.play" %% "anorm" % "2.4.0"
-)
-
-scalacOptions ++= Seq("-Xmax-classfile-name","78")
+version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
+
+resolvers += Resolver.sonatypeRepo("snapshots")
+
+scalaVersion := "2.12.4"
+
+crossScalaVersions := Seq("2.11.12", "2.12.4")
+
+libraryDependencies ++= Seq(
+	guice,
+	jdbc,
+	evolutions,
+	"org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test,
+	"mysql" % "mysql-connector-java" % "5.1.41",
+	"org.playframework.anorm" %% "anorm" % "2.6.0"
+)
+
