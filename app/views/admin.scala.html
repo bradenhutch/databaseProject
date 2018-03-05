@@ -1,3 +1,5 @@
+@import helper._
+
 <div>
 	<h2>Admin Page</h2>
 </div>
@@ -8,7 +10,8 @@
 
 <div class="newProduct">
 	<h3>New Product</h3>
-	<form>
+	<form method="POST" action="routes.ProductController.creates">
+		
 		<li id="product1">
 			Price $
 			<input id="productPrice" value="" type="text" />

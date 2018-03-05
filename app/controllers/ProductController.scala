@@ -10,9 +10,11 @@ import models._
 @Singleton
 class ProductController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
 
-  def create = Action {
+  def create = Action(parse.multipartFormData) {
+  	implicit request =>
+  	println(request.body.toString)
   	implicit val conn = db.getConnection()
-  	//val user = Product().create
+  	// val user = Product().create
   	println("*********************************************************")
   	conn.close()
   	Ok
