@@ -17,7 +17,7 @@ class AdminController @Inject()(cc: ControllerComponents) extends AbstractContro
    * a path of `/`.
    */
   def index = Action {
-    Ok(views.html.index("This is the admin page"))
+    Ok(views.html.admin())
   }
 
 }
