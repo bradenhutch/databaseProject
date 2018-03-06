@@ -25,7 +25,7 @@ import javax.inject._
  */ 
 
 case class Orders(Id: Option[Long], userId: Long, shippingAddId: Long, billingAddId: Long,
-	createdDate: String, dateCreated: String, subtotal: Double, tax: Double, total: Double) {
+	createdDate: String, dateCreated: String, subtotal: BigDecimal, tax: BigDecimal, total: BigDecimal) {
 
 	def create(implicit db:java.sql.Connection) = {
 		println("######################################")

@@ -1,6 +1,10 @@
 package controllers
 
 import javax.inject._
+import play.api.data._
+import play.api.data.{Mapping, Form}
+import play.api.data.Forms._
+import play.api.data.validation.Constraints._
 import play.api.db._
 import play.api.mvc._
 import anorm._
@@ -12,7 +16,24 @@ class ProductController @Inject()(db: Database, cc: ControllerComponents) extend
 
   def create = Action(parse.urlFormEncoded) { implicit request =>
 
-  	//Validate all the data from the form
+    //Validate all the data from the form
+    val productForm = Form(
+      mapping(
+        "id" -> optional(longNumber),
+        "productName" -> nonEmptyText,
+        "productPrice" -> bigDecimal,
+        "productImageLocation" -> nonEmptyText,
+        "productColor" -> nonEmptyText,
+        "productMaterial" -> nonEmptyText,
+        "productDimensions" -> nonEmptyText,
+        "productWeight" -> bigDecimal,
+        "productStock" -> number(min = 0, max = 1000000),
+        "productDescription" -> nonEmptyText)(Product.apply)(Product.unapply))
+
+    val processedForm = productForm.bindFromRequest
+    processedForm.fold(hasErrors => BadRequest("Invalid submmission"), success=> {
+      Ok("Product registered.")
+    })
 
   	//Extract all of the values from the form
   	val productName = request.body("productName")(0)

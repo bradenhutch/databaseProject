@@ -25,8 +25,8 @@ import javax.inject._
  * @param description
  */ 
 
-case class Product(Id: Option[Long], name: String, price: Double, imageLocation: String, 
-	color: String, material: String, dimensions: String, weight: Double, currentStock: Int, 
+case class Product(Id: Option[Long], name: String, price: BigDecimal, imageLocation: String, 
+	color: String, material: String, dimensions: String, weight: BigDecimal, currentStock: Int, 
 	description: String) {
 
 	def create(implicit db:java.sql.Connection) = {

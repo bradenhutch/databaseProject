@@ -51,21 +51,21 @@ CREATE TABLE orders (
 	billingAddId	VARCHAR(255) NOT NULL,
 	createdDate		VARCHAR(255) NOT NULL,
 	shippedDate		VARCHAR(255) NOT NULL,
-	subtotal		DOUBLE NOT NULL,
-	tax				DOUBLE NOT NULL,
-	total			DOUBLE NOT NULL,
+	subtotal		DECIMAL NOT NULL,
+	tax				DECIMAL NOT NULL,
+	total			DECIMAL NOT NULL,
 	PRIMARY KEY(Id)
 );
 
 CREATE TABLE product (
 	Id				BIGINT NOT NULL AUTO_INCREMENT,
 	name 			VARCHAR(255) NOT NULL,
-	price			DOUBLE NOT NULL,
+	price			DECIMAL NOT NULL,
 	imageLocation	VARCHAR(255) NOT NULL,
 	color			VARCHAR(255) NOT NULL,
 	material		VARCHAR(255) NOT NULL,
 	dimensions		VARCHAR(255) NOT NULL,
-	weight			DOUBLE NOT NULL,
+	weight			DECIMAL NOT NULL,
 	currentStock	INT NOT NULL,
 	description		TEXT NOT NULL,
 	PRIMARY KEY(Id)
