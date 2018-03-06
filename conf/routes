@@ -12,4 +12,4 @@ GET		/assets/*file			controllers.Assets.versioned(path="/public", file: Asset)
 GET		/admin					controllers.AdminController.index
 
 +nocsrf
-POST	/newProduct		controllers.ProductController.create
+POST	/newProduct				controllers.ProductController.create
