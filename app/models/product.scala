@@ -30,11 +30,6 @@ case class Product(Id: Option[Long], price: Double, imageLocation: String,
 
 	def create(implicit db:java.sql.Connection) = {
 		println("######################################")
-		//SQL("INSERT INTO Product (price, imageLocation, color, material, dimensions, weight, 
-			// currentStock, description) VALUES ({price}, {imageLocation}, {color}, {material}, 
-			// {dimensions}, {weight}, {currentStock}, {descriptions});").on('price -> price,
-			// 'imageLocation -> imageLocation, 'color -> color, 'material -> material, 
-			// 'dimensions -> dimensions, 'weight -> weight, 'currentStock -> currentStock, 
-			// 'description -> description).executeInsert()
+		SQL("INSERT INTO product (price, imageLocation, color, material, dimensions, weight, currentStock, description) VALUES ({price}, {imageLocation}, {color}, {material}, {dimensions}, {weight}, {currentStock}, {description});").on('price -> price, 'imageLocation -> imageLocation, 'color -> color, 'material -> material, 'dimensions -> dimensions, 'weight -> weight, 'currentStock -> currentStock, 'description -> description).executeInsert()
 	}
 }
