@@ -32,13 +32,13 @@ case class ProductController @Inject()(db: Database, cc: ControllerComponents) e
 
 		//Extract all of the values from the form
 		val productName = request.body("productName")(0)
-		val productPrice = request.body("productPrice")(0).toDouble
+		val productPriceString = request.body("productPrice")(0) //.toDouble
 		val productImageLocation = request.body("productImageLocation")(0)
 		val productColor = request.body("productColor")(0)
 		val productMaterial = request.body("productMaterial")(0)
 		val productDimensions = request.body("productDimensions")(0)
-		val productWeight = request.body("productWeight")(0).toDouble
-		val productStock = request.body("productStock")(0).toInt
+		val productWeightString = request.body("productWeight")(0) //.toDouble
+		val productStockString = request.body("productStock")(0) //.toInt
 		val productDescription = request.body("productDescription")(0)
 
 		//Bind the form and evaluate it
@@ -48,6 +48,10 @@ case class ProductController @Inject()(db: Database, cc: ControllerComponents) e
 			Ok(views.html.index("Bad input..."))
 		},
 		success => {
+			//Convert values now that it is safe
+			val productPrice = productPriceString.toDouble 
+			val productWeight = productWeightString.toDouble
+			val productStock = productStockString.toInt
 			//Connect to the database and run the create query
 			implicit val conn = db.getConnection()
 			val user = Product(None, productName, productPrice, productImageLocation, productColor, 

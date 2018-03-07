@@ -38,7 +38,7 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 		val userEmail = request.body("userEmail")(0)
 		val userPassword = DigestUtils.sha256Hex(request.body("userPassword")(0))
 		val userGender = request.body("userGender")(0)
-		val userAdmin = request.body("userAdmin")(0).toBoolean
+		val userAdminString = request.body("userAdmin")(0) //.toBoolean
 
 		//Bind the form and evaluate it
 		val processedForm = userForm.bindFromRequest
@@ -47,6 +47,8 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 				Ok(views.html.index("Bad input..."))
 			}, 
 			success => {
+				//Convert values now that it is safe
+				val userAdmin = userAdminString.toBoolean
 				//Connect to the database and run the create query
 			  	implicit val conn = db.getConnection()
 				val user = User(None, username, userPhoneNumber, userFirstName, userLastName, userEmail, 
