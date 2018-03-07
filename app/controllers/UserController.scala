@@ -13,20 +13,9 @@ import org.apache.commons.codec.digest.DigestUtils
 
 
 @Singleton
-class UserController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
+case class UserController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
 
-  def create = Action(parse.urlFormEncoded) { implicit request =>
-
-	//Extract all of the values from the from
-	val username = request.body("username")(0)
-	val userPhoneNumber = request.body("userPhoneNumber")(0)
-	val userFirstName = request.body("userFirstName")(0)
-	val userLastName = request.body("userLastName")(0)
-	val userEmail = request.body("userEmail")(0)
-	val userPassword = DigestUtils.sha256Hex(request.body("userPassword")(0))
-	val userGender = request.body("userGender")(0)
-	val userAdmin = request.body("userAdmin")(0).toBoolean
-
+	//Create constraints for the user form
 	val userForm = Form(
 		mapping(
 			"id" -> optional(longNumber),
@@ -39,18 +28,35 @@ class UserController @Inject()(db: Database, cc: ControllerComponents) extends A
 			"userGender" -> nonEmptyText,
 			"userAdmin" -> boolean)(User.apply)(User.unapply))
 
-	val processedForm = userForm.bindFromRequest
-	processedForm.fold(hasErrors => BadRequest("Invalid submmission"), success => {
-	  Ok("Product registered.")
-	})
+  	def create = Action(parse.urlFormEncoded) { implicit request =>
 
+		//Extract all of the values from the from
+		val username = request.body("username")(0)
+		val userPhoneNumber = request.body("userPhoneNumber")(0)
+		val userFirstName = request.body("userFirstName")(0)
+		val userLastName = request.body("userLastName")(0)
+		val userEmail = request.body("userEmail")(0)
+		val userPassword = DigestUtils.sha256Hex(request.body("userPassword")(0))
+		val userGender = request.body("userGender")(0)
+		val userAdmin = request.body("userAdmin")(0).toBoolean
 
-	implicit val conn = db.getConnection()
-	val user = User(None, username, userPhoneNumber, userFirstName, userLastName, userEmail, 
-		userPassword, userGender, userAdmin).create
-	println("*********************************************************")
-	conn.close()
-	Redirect(routes.AdminController.index)
-  }
+		//Bind the form and evaluate it
+		val processedForm = userForm.bindFromRequest
+		processedForm.fold(hasErrors => {
+				println("Why do you try to break my users??!?!?")
+				Ok(views.html.index("Bad input..."))
+			}, 
+			success => {
+				//Connect to the database and run the create query
+			  	implicit val conn = db.getConnection()
+				val user = User(None, username, userPhoneNumber, userFirstName, userLastName, userEmail, 
+				userPassword, userGender, userAdmin).create
+				println("*********************************************************")
+				conn.close()
+				Ok(views.html.index("Successfully added new user."))
+			})
+		
+		Redirect(routes.AdminController.index)
+	}
 
 }
