@@ -9,6 +9,7 @@ import play.api.db._
 import play.api.mvc._
 import anorm._
 import models._
+import org.apache.commons.codec.digest.DigestUtils
 
 
 @Singleton
@@ -22,7 +23,7 @@ class UserController @Inject()(db: Database, cc: ControllerComponents) extends A
 	val userFirstName = request.body("userFirstName")(0)
 	val userLastName = request.body("userLastName")(0)
 	val userEmail = request.body("userEmail")(0)
-	val userPassword = request.body("userPassword")(0)
+	val userPassword = DigestUtils.sha256Hex(request.body("userPassword")(0))
 	val userGender = request.body("userGender")(0)
 	val userAdmin = request.body("userAdmin")(0).toBoolean
 
