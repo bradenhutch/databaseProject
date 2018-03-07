@@ -63,7 +63,7 @@
 
 <div class="newUser">
 	<h3>New User</h3>
-	<form>
+	<form method="POST" action="@routes.UserController.create">
 		<li id="user1">
 			Username
 			<input name="username" value="" type="text" />
@@ -98,7 +98,8 @@
 		</li>
 		<li id="user8">
 			Admin
-			<input name="userAdmin" type="checkbox" value="1" />
+			<input name="userAdmin" type="hidden" value="false" />
+			<input name="userAdmin" type="checkbox" value="true" />
 		</li>
 		<input type="submit">
 	</form>

@@ -29,9 +29,12 @@ case class User(userId: Option[Long], username: String, phoneNumber: String, fir
 
 	def create(implicit db:java.sql.Connection) = {
 		println("######################################")
-		//SQL("INSERT INTO user (username, phoneNumber, firstName, lastName, email, password, gender, admin) 
-			// VALUES ({username}, {phoneNumber}, {firstName}, {lastName}, {email}, {password}, {gender}, 
-			// {admin});").on('username -> username,'phoneNumber -> phoneNumber, 'firstName -> firstName, 'lastName -> lastName 
-			// 'email -> email, 'password -> password, 'gender -> gender, 'admin -> admin).executeInsert()
+		SQL("""
+			INSERT INTO user (username, phoneNumber, firstName, lastName, email, password, gender, 
+			admin) VALUES ({username}, {phoneNumber}, {firstName}, {lastName}, {email}, {password}, 
+			{gender}, {admin});
+			""").on('username -> username,'phoneNumber -> phoneNumber, 'firstName -> firstName, 
+			'lastName -> lastName, 'email -> email, 'password -> password, 'gender -> gender, 
+			'admin -> admin).executeInsert()
 	}
 }
