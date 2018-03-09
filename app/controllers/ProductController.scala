@@ -45,12 +45,12 @@ case class ProductController @Inject()(db: Database, cc: ControllerComponents) e
 		val processedForm = productForm.bindFromRequest
 		processedForm.fold(hasErrors => {
 			println("Why do you try to break my products??!?!?")
-			Ok(views.html.index("Bad input..."))
+			BadRequest(views.html.index("Bad input..."))
 		},
 		success => {
 			//Convert values now that it is safe
-			val productPrice = productPriceString.toDouble 
-			val productWeight = productWeightString.toDouble
+			val productPrice = BigDecimal(productPriceString)
+			val productWeight = BigDecimal(productWeightString)
 			val productStock = productStockString.toInt
 			//Connect to the database and run the create query
 			implicit val conn = db.getConnection()
@@ -59,10 +59,14 @@ case class ProductController @Inject()(db: Database, cc: ControllerComponents) e
 			productDescription).create
 			println("*********************************************************")
 			conn.close()
-			Ok("Product registered.")
+			Ok(views.html.index("Product registered."))
 		})
-		
-		Redirect(routes.AdminController.index)
 	}
 
+
+	/*def delete = Action {
+		implicit val conn = db.getConnection()
+
+		conn.close()	
+	}*/
 }

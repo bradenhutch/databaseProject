@@ -43,22 +43,25 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 		//Bind the form and evaluate it
 		val processedForm = userForm.bindFromRequest
 		processedForm.fold(hasErrors => {
-				println("Why do you try to break my users??!?!?")
-				Ok(views.html.index("Bad input..."))
-			}, 
-			success => {
-				//Convert values now that it is safe
-				val userAdmin = userAdminString.toBoolean
-				//Connect to the database and run the create query
-			  	implicit val conn = db.getConnection()
-				val user = User(None, username, userPhoneNumber, userFirstName, userLastName, userEmail, 
-				userPassword, userGender, userAdmin).create
-				println("*********************************************************")
-				conn.close()
-				Ok(views.html.index("Successfully added new user."))
-			})
-		
-		Redirect(routes.AdminController.index)
+			println("Why do you try to break my users??!?!?")
+			BadRequest(views.html.index("Bad input..."))
+		}, 
+		success => {
+			//Convert values now that it is safe
+			val userAdmin = userAdminString.toBoolean
+			//Connect to the database and run the create query
+		  	implicit val conn = db.getConnection()
+			val user = User(None, username, userPhoneNumber, userFirstName, userLastName, userEmail, 
+			userPassword, userGender, userAdmin).create
+			println("*********************************************************")
+			conn.close()
+			Ok(views.html.index("Successfully added new user."))
+		})
 	}
 
+	/*def delete = Action {
+		implicit val conn = db.getConnection()
+
+		conn.close()
+	}*/
 }

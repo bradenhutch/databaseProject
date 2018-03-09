@@ -1,6 +1,8 @@
 package models
 
 import anorm._
+import anorm.SqlParser._
+import util.Random
 import java.sql.SQLException
 import java.sql.Date
 import play.api.db._
@@ -41,5 +43,34 @@ case class Product(Id: Option[Long], name: String, price: BigDecimal, imageLocat
 			'color -> color, 'material -> material, 'dimensions -> dimensions, 
 			'weight -> weight, 'currentStock -> currentStock, 
 			'description -> description).executeInsert()
+	}
+
+}
+
+object Product {
+
+	val tableName = "product"
+	val simple = {
+    	get[Option[Long]](tableName + ".Id") ~
+    	get[String](tableName + ".name") ~
+    	get[BigDecimal](tableName + ".price") ~
+    	get[String](tableName + ".imageLocation") ~
+    	get[String](tableName + ".color") ~
+    	get[String](tableName + ".material") ~
+    	get[String](tableName + ".dimensions") ~
+    	get[BigDecimal](tableName + ".weight") ~
+    	get[Int](tableName + ".currentStock") ~
+    	get[String](tableName + ".description") map {
+    		case id~name~price~imageLocation~color~material~dimensions~weight~currentStock~
+    		description =>
+    			Product(id, name, price, imageLocation, color, material, dimensions, weight, 
+    				currentStock, description)
+    	}
+	}
+
+	def returnAll(implicit db:java.sql.Connection) = {
+		SQL("""
+			SELECT * FROM product;
+			""").as(simple *)
 	}
 }

@@ -1,7 +1,8 @@
+@(allProducts: List[Product], allUsers: List[User])
 
-
+@main("Admin Page"){
 <div>
-	<h2>Admin Page</h2>
+	<h1>Admin Page</h1>
 </div>
 
 <div>
@@ -14,44 +15,44 @@
 	<form method="POST" action="@routes.ProductController.create">
 		<li id="product0">
 			Product Name
-			<input name="productName" value="" type="text" />
+			<input name="productName" value="" type="text">
 		</li>
 		<li id="product1">
 			Price $
-			<input name="productPrice" value="" type="text" />
+			<input name="productPrice" value="" type="text">
 			<label for="productPrice">
 				Input numbers only with or without a decimal point.
 			</label>
 		</li>
 		<li id="product2">
 			Image
-			<input name="productImageLocation" value="Upload Image" type="file" />
+			<input name="productImageLocation" value="Upload Image" type="file">
 		</li>
 		<li id="product3">
 			Color
-			<input name="productColor" value="" type="text" />
+			<input name="productColor" value="" type="text">
 		</li>
 		<li id="product4">
 			Material
-			<input name="productMaterial" value="" type="text" />
+			<input name="productMaterial" value="" type="text">
 		</li>
 		<li id="product5">
 			Dimensions
-			<input name="productDimensions" value="" type="text" />
+			<input name="productDimensions" value="" type="text">
 			<label for="productDimensions">
 				Input dimension in cm in length x width x height i.e. 40x50x60.
 			</label>
 		</li>
 		<li id="product6">
 			Weight (kg)
-			<input name="productWeight" value="" type="text" />
+			<input name="productWeight" value="" type="text">
 			<label for="productWeight">
 				Input numbers only with or without a decimal point.
 			</label>
 		</li>
 		<li id="product7">
 			Current Stock
-			<input name="productStock" value="" type="text" />
+			<input name="productStock" value="" type="text">
 			<label for="productStock">
 				Input integers only.
 			</label>
@@ -69,28 +70,28 @@
 	<form method="POST" action="@routes.UserController.create">
 		<li id="user1">
 			Username
-			<input name="username" value="" type="text" />
+			<input name="username" value="" type="text">
 		</li>
 		<li id="user2">
 			Phone Number
-			<input name="userPhoneNumber" value="" type="text" />
+			<input name="userPhoneNumber" value="" type="text">
 			Please insert in xxx-xxx-xxxx format.
 		</li>
 		<li id="user3">
 			First Name
-			<input name="userFirstName" value="" type="text" />
+			<input name="userFirstName" value="" type="text">
 		</li>
 		<li id="user4">
 			Last Name
-			<input name="userLastName" value="" type="text" />
+			<input name="userLastName" value="" type="text">
 		</li>
 		<li id="user5">
 			Email
-			<input name="userEmail" value="" type="text" />
+			<input name="userEmail" value="" type="text">
 		</li>
 		<li id="user6">
 			Password
-			<input name="userPassword" value="" type="password" />
+			<input name="userPassword" value="" type="password">
 		</li>
 		<li id="user7">
 			Gender
@@ -101,9 +102,84 @@
 		</li>
 		<li id="user8">
 			Admin
-			<input name="userAdmin" type="hidden" value="false" />
-			<input name="userAdmin" type="checkbox" value="true" />
+			<input name="userAdmin" type="hidden" value="false">
+			<input name="userAdmin" type="checkbox" value="true">
 		</li>
 		<input type="submit">
 	</form>
 </div>
+
+
+<div class="displayProducts">
+	<h3>Products</h3>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Image Location</th>
+			<th>Color</th>
+			<th>Material</th>
+			<th>Dimensions</th>
+			<th>Weight</th>
+			<th>Current Stock</th>
+			<th>Description</th>
+		</tr>
+	@for(allProducts <- allProducts) {
+		<tr>
+			<td>@allProducts.Id</td>
+			<td>@allProducts.name</td>
+			<td>@allProducts.price</td>
+			<td>@allProducts.imageLocation</td>
+			<td>@allProducts.color</td>
+			<td>@allProducts.material</td>
+			<td>@allProducts.dimensions</td>
+			<td>@allProducts.weight</td>
+			<td>@allProducts.currentStock</td>
+			<td>@allProducts.description</td>
+		</tr>
+	}
+	</table>
+	<h4>Delete</h4>
+	<form method="POST" action="">
+		Input the ID of the product you wish to delete
+		<input name="deleteID" value="" type="text">
+		<input type="submit">
+	</form>
+</div>
+
+<div class="displayUsers">
+	<h3>Users</h3>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Username</th>
+			<th>Phone Number</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Email</th>
+			<th>Gender</th>
+			<th>Admin</th>
+		</tr>
+	@for(allUsers <- allUsers) {
+		<tr>
+			<td>@allUsers.Id</td>
+			<td>@allUsers.username</td>
+			<td>@allUsers.phoneNumber</td>
+			<td>@allUsers.firstName</td>
+			<td>@allUsers.lastName</td>
+			<td>@allUsers.email</td>
+			<td>@allUsers.gender</td>
+			@if(allUsers.admin == "1") { <td>Yes</td>} else {<td>No</td>}
+		</tr>
+	}
+	</table>
+	<h4>Delete</h4>
+	<form method="POST" action="">
+		Input the ID of the user you wish to delete
+		<input name="deleteID" value="" type="text">
+		<input type="submit">
+	</form>
+</div>
+
+}

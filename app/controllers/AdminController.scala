@@ -1,23 +1,24 @@
 package controllers
 
 import javax.inject._
+import play.api.data._
+import play.api.data.{Mapping, Form}
+import play.api.data.Forms._
+import play.api.data.validation.Constraints._
+import play.api.db._
 import play.api.mvc._
+import anorm._
+import models._
 
-/**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
- */
 @Singleton
-class AdminController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class AdminController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
 
-  /**
-   * Create an Action to render an HTML page with a welcome message.
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
   def index = Action {
-    Ok(views.html.admin())
+    implicit val conn = db.getConnection()
+		val allProducts = Product.returnAll
+		val allUsers = User.returnAll
+		conn.close()
+		Ok(views.html.admin(allProducts, allUsers))
   }
 
 }

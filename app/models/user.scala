@@ -1,6 +1,8 @@
 package models
 
 import anorm._
+import anorm.SqlParser._
+import util.Random
 import java.sql.SQLException
 import java.sql.Date
 import play.api.db._
@@ -13,7 +15,7 @@ import javax.inject._
 
 
 /**
- * @param userId
+ * @param Id
  * @param username
  * @param phoneNumber
  * @param firstName
@@ -24,7 +26,7 @@ import javax.inject._
  * @param admin
  */ 
 
-case class User(userId: Option[Long], username: String, phoneNumber: String, firstName: String,
+case class User(Id: Option[Long], username: String, phoneNumber: String, firstName: String,
 	lastName: String, email: String, password: String, gender: String, admin: Boolean) {
 
 	def create(implicit db:java.sql.Connection) = {
@@ -36,5 +38,29 @@ case class User(userId: Option[Long], username: String, phoneNumber: String, fir
 			""").on('username -> username,'phoneNumber -> phoneNumber, 'firstName -> firstName, 
 			'lastName -> lastName, 'email -> email, 'password -> password, 'gender -> gender, 
 			'admin -> admin).executeInsert()
+	}
+}
+
+object User {
+
+	val tableName = "user"
+	val simple = {
+		get[Option[Long]](tableName + ".Id") ~
+		get[String](tableName + ".username") ~
+		get[String](tableName + ".phoneNumber") ~
+		get[String](tableName + ".firstName") ~
+		get[String](tableName + ".lastName") ~
+		get[String](tableName + ".email") ~
+		get[String](tableName + ".gender") ~
+		get[Boolean](tableName + ".admin") map {
+			case id~username~phoneNumber~firstName~lastName~email~gender~admin =>
+				User(id, username, phoneNumber, firstName, lastName, email, "", gender, admin)
+		}
+	}
+
+	def returnAll(implicit db:java.sql.Connection) = {
+		SQL("""
+			SELECT * FROM user;
+			""").as(simple *)
 	}
 }
