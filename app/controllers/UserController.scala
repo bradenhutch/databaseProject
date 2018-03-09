@@ -39,7 +39,6 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 		val userPassword = DigestUtils.sha256Hex(request.body("userPassword")(0))
 		val userGender = request.body("userGender")(0)
 		val userAdminString = request.body("userAdmin")(0)
-		println(userAdminString)
 
 		//Bind the form and evaluate it
 		val processedForm = userForm.bindFromRequest
@@ -62,17 +61,21 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 
 	def delete = Action(parse.urlFormEncoded) { implicit request =>
 		
+		//Check to see if the input is an int
 		try {
 			val deleteID = request.body("deleteID")(0).toInt
 			implicit val conn = db.getConnection()
-			User.delete(conn, deleteID)
-			conn.close()
-			Ok(views.html.index("Delete success!"))
+			//This will be an empty list if the user doesn't exist
+			if(User.returnOne(conn, deleteID).toString != "List()") {
+				User.delete(conn, deleteID)
+				conn.close()
+				Ok(views.html.index("Delete success!"))
+			} else {
+				Ok(views.html.index("That user doesn't exist"))
+			}
 		} catch {
 			case e:Exception=>
 			Ok(views.html.index("Bad input..."))
-		}
-
-		
+		}		
 	}
 }

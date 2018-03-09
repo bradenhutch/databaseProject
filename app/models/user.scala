@@ -64,6 +64,12 @@ object User {
 			""").as(simple *)
 	}
 
+	def returnOne(implicit db: java.sql.Connection, id: Long) = {
+		SQL("""
+			SELECT * FROM user WHERE Id = {id}
+			""").on('id -> id).executeQuery.as(simple *)
+	}
+
 	def delete(implicit db:java.sql.Connection, id: Long) = {
 		SQL("""
 			DELETE FROM user WHERE Id = {id}

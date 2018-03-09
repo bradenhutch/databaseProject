@@ -66,13 +66,18 @@ case class ProductController @Inject()(db: Database, cc: ControllerComponents) e
 
 	def delete = Action(parse.urlFormEncoded) { implicit request =>
 		
+		//Check to see if the input is an int
 		try {
 			val deleteID = request.body("deleteID")(0).toInt
-
 			implicit val conn = db.getConnection()
-			Product.delete(conn, deleteID)
-			conn.close()
-			Ok(views.html.index("Delete success!"))
+			//This will be an empty list if the product doesn't exist
+			if(Product.returnOne(conn, deleteID).toString != "List()") {
+				Product.delete(conn, deleteID)
+				conn.close()
+				Ok(views.html.index("Delete success!"))
+			} else {
+				Ok(views.html.index("That product doesn't exist"))
+			}
 		} catch {
 			case e:Exception=>
 			Ok(views.html.index("Bad input..."))

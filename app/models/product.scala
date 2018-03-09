@@ -74,6 +74,12 @@ object Product {
 			""").as(simple *)
 	}
 
+	def returnOne(implicit db: java.sql.Connection, id: Long) = {
+		SQL("""
+			SELECT * FROM product WHERE Id = {id}
+			""").on('id -> id).executeQuery.as(simple *)
+	}
+
 	def delete(implicit db:java.sql.Connection, id: Long) = {
 		SQL("""
 			DELETE FROM product WHERE Id = {id}
