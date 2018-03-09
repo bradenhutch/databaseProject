@@ -15,3 +15,7 @@ GET		/admin					controllers.AdminController.index
 POST	/newProduct				controllers.ProductController.create
 +nocsrf
 POST	/newUser				controllers.UserController.create
++nocsrf
+POST	/deleteProduct			controllers.ProductController.delete
++nocsrf
+POST	/deleteUser				controllers.UserController.delete

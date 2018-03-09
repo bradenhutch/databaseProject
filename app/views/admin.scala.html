@@ -141,7 +141,7 @@
 	}
 	</table>
 	<h4>Delete</h4>
-	<form method="POST" action="">
+	<form method="POST" action="@routes.ProductController.delete">
 		Input the ID of the product you wish to delete
 		<input name="deleteID" value="" type="text">
 		<input type="submit">
@@ -170,12 +170,12 @@
 			<td>@allUsers.lastName</td>
 			<td>@allUsers.email</td>
 			<td>@allUsers.gender</td>
-			@if(allUsers.admin == "1") { <td>Yes</td>} else {<td>No</td>}
+			<td>@allUsers.admin</td>
 		</tr>
 	}
 	</table>
 	<h4>Delete</h4>
-	<form method="POST" action="">
+	<form method="POST" action="@routes.UserController.delete">
 		Input the ID of the user you wish to delete
 		<input name="deleteID" value="" type="text">
 		<input type="submit">

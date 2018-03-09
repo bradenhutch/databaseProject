@@ -25,20 +25,20 @@ case class ProductController @Inject()(db: Database, cc: ControllerComponents) e
 			"productMaterial" -> nonEmptyText,
 			"productDimensions" -> nonEmptyText,
 			"productWeight" -> bigDecimal,
-			"productStock" -> number(min = 0, max = 1000000),
+			"productStock" -> number(min = 0, max = 1000),
 			"productDescription" -> nonEmptyText)(Product.apply)(Product.unapply))
 
   	def create = Action(parse.urlFormEncoded) { implicit request =>
 
 		//Extract all of the values from the form
 		val productName = request.body("productName")(0)
-		val productPriceString = request.body("productPrice")(0) //.toDouble
+		val productPriceString = request.body("productPrice")(0)
 		val productImageLocation = request.body("productImageLocation")(0)
 		val productColor = request.body("productColor")(0)
 		val productMaterial = request.body("productMaterial")(0)
 		val productDimensions = request.body("productDimensions")(0)
-		val productWeightString = request.body("productWeight")(0) //.toDouble
-		val productStockString = request.body("productStock")(0) //.toInt
+		val productWeightString = request.body("productWeight")(0)
+		val productStockString = request.body("productStock")(0)
 		val productDescription = request.body("productDescription")(0)
 
 		//Bind the form and evaluate it
@@ -64,9 +64,20 @@ case class ProductController @Inject()(db: Database, cc: ControllerComponents) e
 	}
 
 
-	/*def delete = Action {
-		implicit val conn = db.getConnection()
+	def delete = Action(parse.urlFormEncoded) { implicit request =>
+		
+		try {
+			val deleteID = request.body("deleteID")(0).toInt
 
-		conn.close()	
-	}*/
+			implicit val conn = db.getConnection()
+			Product.delete(conn, deleteID)
+			conn.close()
+			Ok(views.html.index("Delete success!"))
+		} catch {
+			case e:Exception=>
+			Ok(views.html.index("Bad input..."))
+		}
+
+		
+	}
 }

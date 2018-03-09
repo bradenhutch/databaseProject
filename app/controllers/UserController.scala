@@ -38,7 +38,8 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 		val userEmail = request.body("userEmail")(0)
 		val userPassword = DigestUtils.sha256Hex(request.body("userPassword")(0))
 		val userGender = request.body("userGender")(0)
-		val userAdminString = request.body("userAdmin")(0) //.toBoolean
+		val userAdminString = request.body("userAdmin")(0)
+		println(userAdminString)
 
 		//Bind the form and evaluate it
 		val processedForm = userForm.bindFromRequest
@@ -59,9 +60,19 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 		})
 	}
 
-	/*def delete = Action {
-		implicit val conn = db.getConnection()
+	def delete = Action(parse.urlFormEncoded) { implicit request =>
+		
+		try {
+			val deleteID = request.body("deleteID")(0).toInt
+			implicit val conn = db.getConnection()
+			User.delete(conn, deleteID)
+			conn.close()
+			Ok(views.html.index("Delete success!"))
+		} catch {
+			case e:Exception=>
+			Ok(views.html.index("Bad input..."))
+		}
 
-		conn.close()
-	}*/
+		
+	}
 }

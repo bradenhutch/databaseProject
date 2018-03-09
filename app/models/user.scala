@@ -63,4 +63,10 @@ object User {
 			SELECT * FROM user;
 			""").as(simple *)
 	}
+
+	def delete(implicit db:java.sql.Connection, id: Long) = {
+		SQL("""
+			DELETE FROM user WHERE Id = {id}
+			""").on('id -> id).executeUpdate()
+	}
 }
