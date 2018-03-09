@@ -66,7 +66,7 @@ object User {
 
 	def returnOne(implicit db: java.sql.Connection, id: Long) = {
 		SQL("""
-			SELECT * FROM user WHERE Id = {id}
+			SELECT * FROM user WHERE Id = {id} LIMIT 1
 			""").on('id -> id).executeQuery.as(simple *)
 	}
 
