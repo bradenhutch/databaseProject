@@ -1,6 +1,7 @@
 @(allProducts: List[Product], allUsers: List[User])
 
 @main("Admin Page"){
+
 <div>
 	<h1>Admin Page</h1>
 </div>
@@ -8,7 +9,7 @@
 <div>
 	<a href="/">Home</a>
 	<br>
-	<a href="#">Logout</a>
+	<a href="@routes.HomeController.logout">Logout</a>
 </div>
 
 
