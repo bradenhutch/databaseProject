@@ -64,10 +64,16 @@ object User {
 			""").as(simple *)
 	}
 
-	def returnOne(implicit db: java.sql.Connection, id: Long) = {
+	def returnOneById(implicit db: java.sql.Connection, id: Long) = {
 		SQL("""
 			SELECT * FROM user WHERE Id = {id} LIMIT 1
 			""").on('id -> id).executeQuery.as(simple *)
+	}
+
+	def returnOneByUserPass(implicit db: java.sql.Connection, username: String, password: String) = {
+		SQL("""
+			SELECT * FROM user WHERE username = {username} AND password = {password} LIMIT 1
+			""").on('username -> username, 'password -> password).executeQuery.as(simple *)		
 	}
 
 	def delete(implicit db:java.sql.Connection, id: Long) = {

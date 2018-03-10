@@ -13,12 +13,12 @@ import models._
 @Singleton
 class AdminController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
 
-  def index = Action {
-    implicit val conn = db.getConnection()
+	def index = Action {
+		implicit val conn = db.getConnection()
 		val allProducts = Product.returnAll
 		val allUsers = User.returnAll
 		conn.close()
 		Ok(views.html.admin(allProducts, allUsers))
-  }
+	}
 
 }

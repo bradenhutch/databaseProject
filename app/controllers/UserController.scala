@@ -55,7 +55,7 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 			userPassword, userGender, userAdmin).create
 			println("*********************************************************")
 			conn.close()
-			Ok(views.html.index("Successfully added new user."))
+			Ok(views.html.index("Successfully added new user"))
 		})
 	}
 
@@ -66,11 +66,12 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 			val deleteID = request.body("deleteID")(0).toInt
 			implicit val conn = db.getConnection()
 			//This will be an empty list if the user doesn't exist
-			if(User.returnOne(conn, deleteID).toString != "List()") {
+			if(User.returnOneById(conn, deleteID).toString != "List()") {
 				User.delete(conn, deleteID)
 				conn.close()
 				Ok(views.html.index("Delete success!"))
 			} else {
+				conn.close()
 				Ok(views.html.index("That user doesn't exist"))
 			}
 		} catch {

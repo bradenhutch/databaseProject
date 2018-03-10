@@ -1,23 +1,49 @@
 package controllers
 
 import javax.inject._
+import play.api.data._
+import play.api.data.{Mapping, Form}
+import play.api.data.Forms._
+import play.api.data.validation.Constraints._
+import play.api.db._
 import play.api.mvc._
+import anorm._
+import models._
+import org.apache.commons.codec.digest.DigestUtils
 
-/**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
- */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class HomeController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
 
-  /**
-   * Create an Action to render an HTML page with a welcome message.
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
-  def index = Action {
-    Ok(views.html.index("Chairs 4 Days Homepage"))
-  }
+	def index = Action {
+		Ok(views.html.index("Chairs 4 Days Homepage"))
+	}
+
+	def login = Action {
+		Ok(views.html.login())
+	}
+
+	def postLogin = Action(parse.urlFormEncoded) { implicit request =>
+
+		val username = request.body("username")(0)
+		val password = DigestUtils.sha256Hex(request.body("password")(0))
+
+		implicit val conn = db.getConnection()
+		val loginAttempt = User.returnOneByUserPass(conn, username, password)
+		if(loginAttempt.toString != "List()") {
+			if(loginAttempt(0).admin.toString == "true") {
+				Ok(views.html.index("Login successful with admin privileges"))
+					.withCookies(Cookie("admin","true")).bakeCookies()
+			} else {
+				Ok(views.html.index("Login successful with basic privileges"))
+					.withCookies(Cookie("admin","false")).bakeCookies()
+			}	
+		} else {
+			Ok(views.html.index("Login failed"))
+		}
+	}
+
+	def logout = Action {
+		Ok(views.html.index("Logout successful")).discardingCookies(DiscardingCookie("admin"))
+	}
 
 }
