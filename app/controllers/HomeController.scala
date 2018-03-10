@@ -32,10 +32,12 @@ class HomeController @Inject()(db: Database, cc: ControllerComponents) extends A
 		if(loginAttempt.toString != "List()") {
 			if(loginAttempt(0).admin.toString == "true") {
 				Ok(views.html.index("Login successful with admin privileges"))
-					.withCookies(Cookie("admin","true", Option(86400))).bakeCookies()
+					.withCookies(Cookie("admin","true", Option(86400)), 
+						Cookie("username", username), Cookie("userId", loginAttempt(0).Id.toString)).bakeCookies()
 			} else {
 				Ok(views.html.index("Login successful with basic privileges"))
-					.withCookies(Cookie("admin","false", Option(86400))).bakeCookies()
+					.withCookies(Cookie("admin","false", Option(86400)), 
+						Cookie("username", username), Cookie("userId", loginAttempt(0).Id.toString)).bakeCookies()
 			}	
 		} else {
 			Ok(views.html.index("Login failed"))
@@ -43,7 +45,8 @@ class HomeController @Inject()(db: Database, cc: ControllerComponents) extends A
 	}
 
 	def logout = Action {
-		Ok(views.html.index("Logout successful")).discardingCookies(DiscardingCookie("admin"))
+		Ok(views.html.index("Logout successful")).discardingCookies(DiscardingCookie("admin"), 
+			DiscardingCookie("username"), DiscardingCookie("userId"))
 	}
 
 }
