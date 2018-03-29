@@ -69,19 +69,38 @@
 	<h3>New Address</h3>
 	<form method="POST" action="@routes.AddressController.create">
 			<input name="userId" value="@userId" type="hidden" />
-		<li id="address1">
 			Street Number
 			<input name="streetNumber" value="" type="text" />
-		</li>
-		<li id="address2">
+			<br>
 			Zip Code
 			<input name="zipCode" value="" type="text" />
-		</li>
-		<li id="address3">
+			<br>
 			City
 			<input name="city" value="" type="text" />
-		</li>
+			<br>
 		<input type="submit" />
 	</form>
 </div>
+
+<div class="displayPaymentMethods">
+	<h3>My Paypal Emails</h3>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Email</th>
+		</tr>
+	</table>
+</div>
+
+<div class="newPaypalEmail">
+	<h3>New Paypal Email</h3>
+	<form method="POST" action="">
+		Paypal Email
+		<input name="userId" value="@userId" type="hidden" />
+		<input name="paypalEmail" type="text"/>
+		<br>
+		<input type="submit" />
+	</form>
+</div>
+
 }

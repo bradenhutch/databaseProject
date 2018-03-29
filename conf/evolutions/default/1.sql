@@ -15,23 +15,23 @@ CREATE TABLE user (
 
 CREATE TABLE payment_method (
 	Id			BIGINT NOT NULL AUTO_INCREMENT,
-	userId			VARCHAR(255) NOT NULL,
+	userId			BIGINT NOT NULL,
 	PRIMARY KEY(Id)
 );
 
 CREATE TABLE paypal (
 	Id			BIGINT NOT NULL AUTO_INCREMENT,
-	paymentId		VARCHAR(255) NOT NULL,
+	paymentId		BIGINT NOT NULL,
 	paypalEmail		VARCHAR(255) NOT NULL,
 	PRIMARY KEY(Id)
 );
 
 CREATE TABLE credit_card (
 	Id			BIGINT NOT NULL AUTO_INCREMENT,
-	paymentId		VARCHAR(255) NOT NULL,
-	cardNumber		VARCHAR(255) NOT NULL,
+	paymentId		BIGINT NOT NULL,
+	cardNumber		BIGINT NOT NULL,
 	expirationDate		VARCHAR(255) NOT NULL,
-	CVV			VARCHAR(255) NOT NULL,
+	CVV			BIGINT NOT NULL,
 	PRIMARY KEY(Id)
 );
 
@@ -46,9 +46,9 @@ CREATE TABLE address (
 
 CREATE TABLE orders (
 	Id			BIGINT NOT NULL AUTO_INCREMENT,
-	userId			VARCHAR(255) NOT NULL,
-	shippingAddId		VARCHAR(255) NOT NULL,
-	billingAddId		VARCHAR(255) NOT NULL,
+	userId			BIGINT NOT NULL,
+	shippingAddId		BIGINT NOT NULL,
+	billingAddId		BIGINT NOT NULL,
 	createdDate		VARCHAR(255) NOT NULL,
 	shippedDate		VARCHAR(255) NOT NULL,
 	subtotal		DECIMAL(8,2) NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE product (
 
 CREATE TABLE review (
 	Id			BIGINT NOT NULL AUTO_INCREMENT,
-	productId		VARCHAR(255) NOT NULL,
+	productId		BIGINT NOT NULL,
 	reviewDate		VARCHAR(255) NOT NULL,
 	author			VARCHAR(255) NOT NULL,
 	reviewText		TEXT NOT NULL,
@@ -81,9 +81,9 @@ CREATE TABLE review (
 );
 
 CREATE TABLE order_products (
-	Id			VARCHAR(255) NOT NULL,
-	productId		VARCHAR(255) NOT NULL,
-	quantity		VARCHAR(255) NOT NULL,
+	Id			BIGINT(255) NOT NULL,
+	productId		BIGINT NOT NULL,
+	quantity		BIGINT NOT NULL,
 	PRIMARY KEY(Id)
 );
 
