@@ -6,4 +6,4 @@ db = client.logins.logins
 cursor = db.find()
 
 for document in cursor:
-	print(document)
+	print(document['userName'] + ',', document['loginDate'])

@@ -1,4 +1,4 @@
-@(allProducts: List[Product], allUsers: List[User])
+@(allProducts: List[Product], allUsers: List[User], logins: String)
 
 @main("Admin Page"){
 
@@ -183,6 +183,11 @@
 		<input name="deleteID" value="" type="text" />
 		<input type="submit" />
 	</form>
+</div>
+
+<div class="loginTracking">
+	<h3>Logins</h3>
+	<span class="logins">@logins</span>
 </div>
 
 }
