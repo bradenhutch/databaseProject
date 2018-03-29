@@ -1,4 +1,4 @@
-@(allProducts: List[Product], username: String, userId: Long)
+@(allProducts: List[Product], allAddresses: List[Address], username: String, userId: Long)
 
 @main("User Page"){
 
@@ -45,7 +45,27 @@
 	</table>
 </div>
 
-<div class="newProduct">
+<div class="displayAddresses">
+	<h3>My Addresses</h3>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Street Number</th>
+			<th>City</th>
+			<th>Zip Code</th>
+		</tr>
+	@for(allAddresses <- allAddresses) {
+		<tr>
+			<th>@allAddresses.Id</th>
+			<th>@allAddresses.streetNumber</th>
+			<th>@allAddresses.city</th>
+			<th>@allAddresses.zipCode</th>
+		</tr>
+	}
+	</table>
+</div>
+
+<div class="newAddress">
 	<h3>New Address</h3>
 	<form method="POST" action="@routes.AddressController.create">
 			<input name="userId" value="@userId" type="hidden" />

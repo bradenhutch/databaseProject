@@ -1,6 +1,8 @@
 package models
 
 import anorm._
+import anorm.SqlParser._
+import util.Random
 import java.sql.SQLException
 import java.sql.Date
 import play.api.db._
@@ -30,5 +32,26 @@ case class Address(Id: Option[Long], userId: Long, streetNumber: String, zipCode
 			INSERT INTO address (userId, streetNumber, zipCode, city) 
 			VALUES ({userId}, {streetNumber}, {zipCode}, {city});
 			""").on('userId -> userId, 'streetNumber -> streetNumber, 'zipCode -> zipCode, 'city -> city).executeInsert()
+	}
+}
+
+object Address {
+
+	val tableName = "address"
+	val simple = {
+    	get[Option[Long]](tableName + ".Id") ~
+    	get[Long](tableName + ".userId") ~
+    	get[String](tableName + ".streetNumber") ~
+    	get[Long](tableName + ".zipCode") ~
+    	get[String](tableName + ".city") map {
+    		case id~userId~streetNumber~zipCode~city =>
+    			Address(id, userId, streetNumber, zipCode, city)
+    	}
+	}
+
+	def returnAll(implicit db:java.sql.Connection) = {
+		SQL("""
+			SELECT * FROM address;
+			""").as(simple *)
 	}
 }

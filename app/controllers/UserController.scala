@@ -19,6 +19,7 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 		if(request.cookies.get("admin").toString != "None") {
 			implicit val conn = db.getConnection()
 			val allProducts = Product.returnAll
+			val allAddresses = Address.returnAll
 			conn.close()
 
 			val username = request.cookies.get("username").toList(0).value.toString
@@ -33,7 +34,7 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 			val removeCommas = ",,".toSet
 			val logins = result.toString.filterNot(removeU).filterNot(removeCommas)
 
-			Ok(views.html.user(allProducts, username, userId))
+			Ok(views.html.user(allProducts, allAddresses, username, userId))
 		} else {
 			Ok(views.html.login())
 		}

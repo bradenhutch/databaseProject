@@ -44,7 +44,6 @@ case class Product(Id: Option[Long], name: String, price: BigDecimal, imageLocat
 			'weight -> weight, 'currentStock -> currentStock, 
 			'description -> description).executeInsert()
 	}
-
 }
 
 object Product {
