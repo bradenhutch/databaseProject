@@ -70,6 +70,12 @@ object User {
 			""").on('id -> id).executeQuery.as(simple *)
 	}
 
+	def returnOneByUserName(implicit db: java.sql.Connection, username: String) = {
+		SQL("""
+			SELECT * FROM user WHERE username = {username} LIMIT 1
+			""").on('username -> username).executeQuery.as(simple *)	
+	}
+
 	def returnOneByUserPass(implicit db: java.sql.Connection, username: String, password: String) = {
 		SQL("""
 			SELECT * FROM user WHERE username = {username} AND password = {password} LIMIT 1

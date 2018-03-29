@@ -10,10 +10,35 @@ import play.api.mvc._
 import anorm._
 import models._
 import org.apache.commons.codec.digest.DigestUtils
-
+import sys.process._
 
 @Singleton
 case class UserController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
+
+	def index = Action { implicit request =>
+		if(request.cookies.get("admin").toString != "None") {
+			implicit val conn = db.getConnection()
+			val allProducts = Product.returnAll
+			conn.close()
+
+			val username = request.cookies.get("username").toList(0).value.toString
+			val dirtyId = request.cookies.get("userId").toList(0).value
+			//Regex to get the right userId
+			val cleanParen = "[()]".toSet
+			val userId = dirtyId.toString.filterNot(cleanParen).takeRight(1).toLong
+
+			val showLoginScript = "python scripts/showLogins.py"
+			val result = Process(showLoginScript).!!
+			val removeU = "u'".toSet
+			val removeCommas = ",,".toSet
+			val logins = result.toString.filterNot(removeU).filterNot(removeCommas)
+
+			Ok(views.html.user(allProducts, username, userId))
+		} else {
+			Ok(views.html.login())
+		}
+		
+	}
 
 	//Create constraints for the user form
 	val userForm = Form(
@@ -28,7 +53,7 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 			"userGender" -> nonEmptyText,
 			"userAdmin" -> boolean)(User.apply)(User.unapply))
 
-  	def create = Action(parse.urlFormEncoded) { implicit request =>
+  	def create = Action(parse.formUrlEncoded) { implicit request =>
 
 		//Extract all of the values from the from
 		val username = request.body("username")(0)

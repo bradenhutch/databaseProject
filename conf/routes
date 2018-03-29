@@ -10,7 +10,8 @@ GET		/assets/*file			controllers.Assets.versioned(path="/public", file: Asset)
 
 # Controller for admin page and other pages
 GET		/admin					controllers.AdminController.index
-
+GET		/user 					controllers.UserController.index
+	
 # Functions for creating and deleting products/users
 +nocsrf
 POST	/newProduct				controllers.ProductController.create
@@ -20,6 +21,10 @@ POST	/newUser				controllers.UserController.create
 POST	/deleteProduct			controllers.ProductController.delete
 +nocsrf
 POST	/deleteUser				controllers.UserController.delete
+
+# Address stuff
++nocsrf
+POST 	/newAddress				controllers.AddressController.create
 
 # Login stuff
 

@@ -28,7 +28,7 @@ case class ProductController @Inject()(db: Database, cc: ControllerComponents) e
 			"productStock" -> number(min = 0, max = 1000),
 			"productDescription" -> nonEmptyText)(Product.apply)(Product.unapply))
 
-  	def create = Action(parse.urlFormEncoded) { implicit request =>
+  	def create = Action(parse.formUrlEncoded) { implicit request =>
 
 		//Extract all of the values from the form
 		val productName = request.body("productName")(0)
@@ -64,7 +64,7 @@ case class ProductController @Inject()(db: Database, cc: ControllerComponents) e
 	}
 
 
-	def delete = Action(parse.urlFormEncoded) { implicit request =>
+	def delete = Action(parse.formUrlEncoded) { implicit request =>
 		
 		//Check to see if the input is an int
 		try {

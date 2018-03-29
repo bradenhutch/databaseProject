@@ -1,0 +1,67 @@
+@(allProducts: List[Product], username: String, userId: Long)
+
+@main("User Page"){
+
+<div>
+	<h1>User Page</h1>
+	<h3>Welcome @username!</h3>
+</div>
+
+<div>
+	<a href="/">Home</a>
+	<br>
+	<a href="@routes.HomeController.logout">Logout</a>
+</div>
+
+<div class="displayProducts">
+	<h3>Products</h3>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Image Location</th>
+			<th>Color</th>
+			<th>Material</th>
+			<th>Dimensions</th>
+			<th>Weight</th>
+			<th>Current Stock</th>
+			<th>Description</th>
+		</tr>
+	@for(allProducts <- allProducts) {
+		<tr>
+			<td>@allProducts.Id</td>
+			<td>@allProducts.name</td>
+			<td>@allProducts.price</td>
+			<td>@allProducts.imageLocation</td>
+			<td>@allProducts.color</td>
+			<td>@allProducts.material</td>
+			<td>@allProducts.dimensions</td>
+			<td>@allProducts.weight</td>
+			<td>@allProducts.currentStock</td>
+			<td>@allProducts.description</td>
+		</tr>
+	}
+	</table>
+</div>
+
+<div class="newProduct">
+	<h3>New Address</h3>
+	<form method="POST" action="@routes.AddressController.create">
+			<input name="userId" value="@userId" type="hidden" />
+		<li id="address1">
+			Street Number
+			<input name="streetNumber" value="" type="text" />
+		</li>
+		<li id="address2">
+			Zip Code
+			<input name="zipCode" value="" type="text" />
+		</li>
+		<li id="address3">
+			City
+			<input name="city" value="" type="text" />
+		</li>
+		<input type="submit" />
+	</form>
+</div>
+}
