@@ -188,6 +188,9 @@
 <div class="loginTracking">
 	<h3>Logins</h3>
 	<span class="logins">@logins</span>
+	<form method="POST" action="@routes.AdminController.clearLogins">
+		<input type="submit" value="Clear History" />
+	</form>
 </div>
 
 }

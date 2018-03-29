@@ -38,4 +38,11 @@ class AdminController @Inject()(db: Database, cc: ControllerComponents) extends 
 		
 	}
 
+	def clearLogins = Action {
+		val clearLoginScript = "python scripts/clearLogins.py"
+		Process(clearLoginScript).!
+
+		Ok(views.html.index("Login history cleared"))
+	}
+
 }
