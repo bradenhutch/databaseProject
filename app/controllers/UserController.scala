@@ -19,14 +19,12 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 		if(request.cookies.get("admin").toString != "None") {
 			implicit val conn = db.getConnection()
 			val allProducts = Product.returnAll
-			val allAddresses = Address.returnAll
-			conn.close()
-
 			val username = request.cookies.get("username").toList(0).value.toString
 			val dirtyId = request.cookies.get("userId").toList(0).value
 			//Regex to get the right userId
 			val cleanParen = "[()]".toSet
 			val userId = dirtyId.toString.filterNot(cleanParen).takeRight(1).toLong
+			val allAddresses = Address.returnAllForUser(conn, userId)
 
 			val showLoginScript = "python scripts/showLogins.py"
 			val result = Process(showLoginScript).!!

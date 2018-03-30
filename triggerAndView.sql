@@ -8,4 +8,4 @@ END IF;//
 
 CREATE VIEW totalProducts AS
 	SELECT COUNT(*) FROM product;
-        
+

@@ -54,4 +54,10 @@ object Address {
 			SELECT * FROM address;
 			""").as(simple *)
 	}
+
+	def returnAllForUser(implicit db:java.sql.Connection, userId: Long) = {
+		SQL("""
+			SELECT * FROM address WHERE userId = {userId};
+			""").on('userId -> userId).as(simple *)
+	}
 }
