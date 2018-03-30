@@ -20,6 +20,15 @@ class AdminController @Inject()(db: Database, cc: ControllerComponents) extends 
 				implicit val conn = db.getConnection()
 				val allProducts = Product.returnAll
 				val allUsers = User.returnAll
+
+				//Use the view and show the total amount of products
+				val dirtyCount = Product.getCount
+
+				//Regex to get the right count
+				val cleanParen = "[()]".toSet
+				val cleanAlpha = "List".toSet
+				val productCount = dirtyCount.toString.filterNot(cleanParen).filterNot(cleanAlpha).toLong
+
 				conn.close()
 
 				//Run the python script to track logins
@@ -29,7 +38,7 @@ class AdminController @Inject()(db: Database, cc: ControllerComponents) extends 
 				val removeCommas = ",,".toSet
 				val logins = result.toString.filterNot(removeU).filterNot(removeCommas)
 
-				Ok(views.html.admin(allProducts, allUsers, logins))
+				Ok(views.html.admin(allProducts, allUsers, productCount, logins))
 			} else {
 				Ok(views.html.index("You are not authorized"))
 			}

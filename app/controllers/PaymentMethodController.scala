@@ -43,7 +43,8 @@ class PaymentMethodController @Inject()(db: Database, cc: ControllerComponents) 
 		val dirtyId = pId(0).Id.toString
 		//Regex to get the right paymentId
 		val cleanParen = "[()]".toSet
-		val paymentId = dirtyId.toString.filterNot(cleanParen).takeRight(1).toLong
+		val cleanAlpha = "Some".toSet
+		val paymentId = dirtyId.toString.filterNot(cleanParen).filterNot(cleanAlpha).toLong
 
 		val paypal = Paypal(None, paymentId, paypalEmail).create
 
@@ -78,7 +79,8 @@ class PaymentMethodController @Inject()(db: Database, cc: ControllerComponents) 
 				val dirtyId = pId(0).Id.toString
 				//Regex to get the right paymentId
 				val cleanParen = "[()]".toSet
-				val paymentId = dirtyId.toString.filterNot(cleanParen).takeRight(1).toLong
+				val cleanAlpha = "Some".toSet
+				val paymentId = dirtyId.toString.filterNot(cleanParen).filterNot(cleanAlpha).toLong
 
 				val creditCard = CreditCard(None, paymentId, cNumber, expirationDate, cvvLong).create
 

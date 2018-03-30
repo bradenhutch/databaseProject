@@ -75,13 +75,27 @@ object Product {
 
 	def returnOne(implicit db: java.sql.Connection, id: Long) = {
 		SQL("""
-			SELECT * FROM product WHERE Id = {id} LIMIT 1
-			""").on('id -> id).executeQuery.as(simple *)
+			SELECT * FROM product WHERE Id = {id} LIMIT 1;
+			""").on('id -> id).as(simple *)
 	}
 
 	def delete(implicit db:java.sql.Connection, id: Long) = {
 		SQL("""
-			DELETE FROM product WHERE Id = {id}
+			DELETE FROM product WHERE Id = {id};
 			""").on('id -> id).executeUpdate()
+	}
+
+	//Stuff for the view
+	val view = {
+		get[Long]("COUNT(*)") map {
+			case count =>
+				(count)
+		}
+	}
+
+	def getCount(implicit db:java.sql.Connection) = {
+		SQL("""
+			SELECT * FROM totalProducts;
+			""").as(view *)
 	}
 }

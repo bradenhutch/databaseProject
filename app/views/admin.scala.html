@@ -1,4 +1,4 @@
-@(allProducts: List[Product], allUsers: List[User], logins: String)
+@(allProducts: List[Product], allUsers: List[User], productCount: Long, logins: String)
 
 @main("Admin Page"){
 
@@ -12,6 +12,44 @@
 	<a href="@routes.HomeController.logout">Logout</a>
 </div>
 
+<div class="displayProducts">
+	<h3>Products</h3>
+	<p>Current product count = @productCount</p>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Image Location</th>
+			<th>Color</th>
+			<th>Material</th>
+			<th>Dimensions</th>
+			<th>Weight</th>
+			<th>Current Stock</th>
+			<th>Description</th>
+		</tr>
+	@for(allProducts <- allProducts) {
+		<tr>
+			<td>@allProducts.Id</td>
+			<td>@allProducts.name</td>
+			<td>@allProducts.price</td>
+			<td>@allProducts.imageLocation</td>
+			<td>@allProducts.color</td>
+			<td>@allProducts.material</td>
+			<td>@allProducts.dimensions</td>
+			<td>@allProducts.weight</td>
+			<td>@allProducts.currentStock</td>
+			<td>@allProducts.description</td>
+		</tr>
+	}
+	</table>
+	<h4>Delete</h4>
+	<form method="POST" action="@routes.ProductController.delete">
+		Input the ID of the product you wish to delete
+		<input name="deleteID" value="" type="text" />
+		<input type="submit" />
+	</form>
+</div>
 
 <div class="newProduct">
 	<h3>New Product</h3>
@@ -68,6 +106,40 @@
 	</form>
 </div>
 
+<div class="displayUsers">
+	<h3>Users</h3>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Username</th>
+			<th>Phone Number</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Email</th>
+			<th>Gender</th>
+			<th>Admin</th>
+		</tr>
+	@for(allUsers <- allUsers) {
+		<tr>
+			<td>@allUsers.Id</td>
+			<td>@allUsers.username</td>
+			<td>@allUsers.phoneNumber</td>
+			<td>@allUsers.firstName</td>
+			<td>@allUsers.lastName</td>
+			<td>@allUsers.email</td>
+			<td>@allUsers.gender</td>
+			<td>@allUsers.admin</td>
+		</tr>
+	}
+	</table>
+	<h4>Delete</h4>
+	<form method="POST" action="@routes.UserController.delete">
+		Input the ID of the user you wish to delete
+		<input name="deleteID" value="" type="text" />
+		<input type="submit" />
+	</form>
+</div>
+
 <div class="newUser">
 	<h3>New User</h3>
 	<form method="POST" action="@routes.UserController.create">
@@ -109,79 +181,6 @@
 			<input name="userAdmin" type="hidden" value="false" />
 		</li>
 		<input type="submit">
-	</form>
-</div>
-
-
-<div class="displayProducts">
-	<h3>Products</h3>
-	<table>
-		<tr>
-			<th>ID</th>
-			<th>Name</th>
-			<th>Price</th>
-			<th>Image Location</th>
-			<th>Color</th>
-			<th>Material</th>
-			<th>Dimensions</th>
-			<th>Weight</th>
-			<th>Current Stock</th>
-			<th>Description</th>
-		</tr>
-	@for(allProducts <- allProducts) {
-		<tr>
-			<td>@allProducts.Id</td>
-			<td>@allProducts.name</td>
-			<td>@allProducts.price</td>
-			<td>@allProducts.imageLocation</td>
-			<td>@allProducts.color</td>
-			<td>@allProducts.material</td>
-			<td>@allProducts.dimensions</td>
-			<td>@allProducts.weight</td>
-			<td>@allProducts.currentStock</td>
-			<td>@allProducts.description</td>
-		</tr>
-	}
-	</table>
-	<h4>Delete</h4>
-	<form method="POST" action="@routes.ProductController.delete">
-		Input the ID of the product you wish to delete
-		<input name="deleteID" value="" type="text" />
-		<input type="submit" />
-	</form>
-</div>
-
-<div class="displayUsers">
-	<h3>Users</h3>
-	<table>
-		<tr>
-			<th>ID</th>
-			<th>Username</th>
-			<th>Phone Number</th>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>Email</th>
-			<th>Gender</th>
-			<th>Admin</th>
-		</tr>
-	@for(allUsers <- allUsers) {
-		<tr>
-			<td>@allUsers.Id</td>
-			<td>@allUsers.username</td>
-			<td>@allUsers.phoneNumber</td>
-			<td>@allUsers.firstName</td>
-			<td>@allUsers.lastName</td>
-			<td>@allUsers.email</td>
-			<td>@allUsers.gender</td>
-			<td>@allUsers.admin</td>
-		</tr>
-	}
-	</table>
-	<h4>Delete</h4>
-	<form method="POST" action="@routes.UserController.delete">
-		Input the ID of the user you wish to delete
-		<input name="deleteID" value="" type="text" />
-		<input type="submit" />
 	</form>
 </div>
 

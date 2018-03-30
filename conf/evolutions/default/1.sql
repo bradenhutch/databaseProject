@@ -87,6 +87,11 @@ CREATE TABLE order_products (
 	PRIMARY KEY(Id)
 );
 
+CREATE TRIGGER priceCheck
+BEFORE INSERT ON product
+FOR EACH ROW IF NEW.price < 0 THEN SET NEW.price = 0;
+END IF;
+
 # --- !Downs
 
 DROP TABLE IF EXISTS user;
@@ -98,3 +103,4 @@ DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS review;
 DROP TABLE IF EXISTS order_products;
+DROP TRIGGER IF EXISTS priceCheck;
