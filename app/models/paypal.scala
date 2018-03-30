@@ -13,8 +13,6 @@ import org.joda.time.DateTime
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter, ISODateTimeFormat}
 import javax.inject._
 
-
-
 /**
  * @param Id
  * @param paymentId
@@ -43,18 +41,20 @@ object Paypal {
 	}
 
 	val joined = {
-		get[String]("paypalEmail") ~
-		get[Long]("paymentId") ~
-		get[Long]("userId") map {
-			case paypalEmail~paymentId~userId =>
-				(paypalEmail, paymentId, userId)
+		get[Long]("userId") ~
+		get[Long]("paymentId") ~		
+		get[String]("paypalEmail") map {
+			case userId~paymentId~paypalEmail =>
+				(userId, paymentId, paypalEmail)
 		}
 	}
 
 	def returnAllForUser(implicit db:java.sql.Connection, userId: Long) = {
 		SQL("""
-			SELECT userId, paymentId, paypalEmail FROM paypal INNER JOIN payment_method 
-			ON paypal.paymentId = payment_method.Id WHERE userId = {userId};
+			SELECT userId, paymentId, paypalEmail 
+			FROM paypal 
+			INNER JOIN payment_method ON paypal.paymentId = payment_method.Id 
+			WHERE userId = {userId};
 			""").on('userId -> userId).as(joined *)
 	}
 }

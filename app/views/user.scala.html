@@ -1,4 +1,4 @@
-@(allProducts: List[Product], allAddresses: List[Address], allPaypal: List[(String, Long, Long)], username: String, userId: Long)
+@(allProducts: List[Product], allAddresses: List[Address], allPaypal: List[(Long, Long, String)], allCreditCards: List[(Long, Long, Long)], username: String, userId: Long)
 
 @main("User Page"){
 
@@ -92,7 +92,7 @@
 	@for(allPaypal <- allPaypal) {
 		<tr>
 			<td>@allPaypal._2</td>
-			<td>@allPaypal._1</td>
+			<td>@allPaypal._3</td>
 		</tr>
 	}
 	</table>
@@ -116,6 +116,12 @@
 			<th>ID</th>
 			<th>Number</th>
 		</tr>
+	@for(allCreditCards <- allCreditCards) {
+		<tr>
+			<td>@allCreditCards._2</td>
+			<td>@allCreditCards._3.toString.takeRight(4)</td>
+		</tr>
+	}
 	</table>
 </div>
 

@@ -30,10 +30,11 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 			val allProducts = Product.returnAll
 			val allAddresses = Address.returnAllForUser(conn, userId)
 			val allPaypal = Paypal.returnAllForUser(conn, userId)
+			val allCreditCards = CreditCard.returnAllForUserShort(conn, userId)
 
 			conn.close()
 
-			Ok(views.html.user(allProducts, allAddresses, allPaypal, username, userId))
+			Ok(views.html.user(allProducts, allAddresses, allPaypal, allCreditCards, username, userId))
 		} else {
 			Ok(views.html.login())
 		}
