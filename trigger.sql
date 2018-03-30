@@ -1,0 +1,7 @@
+#Trigger
+
+DELIMITER //
+CREATE TRIGGER priceCheck
+BEFORE INSERT ON product
+FOR EACH ROW IF NEW.price < 0 THEN SET NEW.price = 0;
+END IF;//

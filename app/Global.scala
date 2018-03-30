@@ -1,4 +1,4 @@
-import play.api.http.HttpErrorHandler
+/*import play.api.http.HttpErrorHandler
 import play.api.mvc._
 import play.api.mvc.Results._
 import scala.concurrent._
@@ -20,3 +20,4 @@ class ErrorHandler extends HttpErrorHandler {
     )
   }
 }
+*/

@@ -26,6 +26,12 @@ POST	/deleteUser				controllers.UserController.delete
 +nocsrf
 POST 	/newAddress				controllers.AddressController.create
 
+# Payment stuff
++nocsrf
+POST 	/newPaypal				controllers.PaymentMethodController.createPaypal
++nocsrf
+POST 	/newCreditCard			controllers.PaymentMethodController.createCreditCard
+
 # Login stuff
 
 GET		/login 					controllers.HomeController.login

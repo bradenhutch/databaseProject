@@ -15,15 +15,19 @@ import javax.inject._
 /**
  * @param Id
  * @param paymentId
- * @param paypalEmail
+ * @param cardNumber
+ * @param expirationDate
+ * @param CVV
  */ 
 
-case class Paypal(Id: Option[Long], paymentId: Long, paypalEmail: String) {
+case class CreditCard(Id: Option[Long], paymentId: Long, cardNumber: Long, expirationDate: String, CVV: Long) {
 
 	def create(implicit db:java.sql.Connection) = {
 		println("######################################")
 		SQL("""
-			INSERT INTO paypal (paymentId, paypalEmail) VALUES ({paymentId}, {paypalEmail});
-			""").on('paymentId -> paymentId, 'paypalEmail -> paypalEmail).executeInsert()
+			INSERT INTO credit_card (paymentId, cardNumber, expirationDate, CVV) VALUES ({paymentId}, {cardNumber},
+			{expirationDate},{CVV});
+			""").on('paymentId -> paymentId, 'cardNumber -> cardNumber, 'expirationDate -> expirationDate,
+			'CVV -> CVV).executeInsert()
 	}
 }

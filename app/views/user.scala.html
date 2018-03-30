@@ -82,7 +82,7 @@
 	</form>
 </div>
 
-<div class="displayPaymentMethods">
+<div class="displayPaypal">
 	<h3>My Paypal Emails</h3>
 	<table>
 		<tr>
@@ -94,13 +94,39 @@
 
 <div class="newPaypalEmail">
 	<h3>New Paypal Email</h3>
-	<form method="POST" action="">
-		Paypal Email
+	<form method="POST" action="@routes.PaymentMethodController.createPaypal">
 		<input name="userId" value="@userId" type="hidden" />
+		Paypal Email
 		<input name="paypalEmail" type="text"/>
 		<br>
 		<input type="submit" />
 	</form>
 </div>
 
+<div class="displayCreditCards">
+	<h3>My Credit Cards</h3>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Number</th>
+		</tr>
+	</table>
+</div>
+
+<div class="newCreditCard">
+	<h3>New Credit Card</h3>
+	<form method="POST" action="@routes.PaymentMethodController.createCreditCard">
+		<input name="userId" value="@userId" type="hidden" />
+		Card Number
+		<input name="cardNumber" type="text"/>
+		<br>
+		Expiration date (MM/YY)
+		<input name="expirationDate" type="text"/>
+		<br>
+		CVV (On back of card)
+		<input name="cvv" type="text"/>
+		<br>
+		<input type="submit" />
+	</form>
+</div>
 }
