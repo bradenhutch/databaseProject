@@ -18,21 +18,22 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 	def index = Action { implicit request =>
 		if(request.cookies.get("admin").toString != "None") {
 			implicit val conn = db.getConnection()
-			val allProducts = Product.returnAll
+
+			//Get the username and id from the cookies
 			val username = request.cookies.get("username").toList(0).value.toString
 			val dirtyId = request.cookies.get("userId").toList(0).value
 			//Regex to get the right userId
 			val cleanParen = "[()]".toSet
 			val userId = dirtyId.toString.filterNot(cleanParen).takeRight(1).toLong
+			
+			//Get everything else we need for this page
+			val allProducts = Product.returnAll
 			val allAddresses = Address.returnAllForUser(conn, userId)
+			val allPaypal = Paypal.returnAllForUser(conn, userId)
 
-			val showLoginScript = "python scripts/showLogins.py"
-			val result = Process(showLoginScript).!!
-			val removeU = "u'".toSet
-			val removeCommas = ",,".toSet
-			val logins = result.toString.filterNot(removeU).filterNot(removeCommas)
+			conn.close()
 
-			Ok(views.html.user(allProducts, allAddresses, username, userId))
+			Ok(views.html.user(allProducts, allAddresses, allPaypal, username, userId))
 		} else {
 			Ok(views.html.login())
 		}

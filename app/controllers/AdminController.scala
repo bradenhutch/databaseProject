@@ -22,6 +22,7 @@ class AdminController @Inject()(db: Database, cc: ControllerComponents) extends 
 				val allUsers = User.returnAll
 				conn.close()
 
+				//Run the python script to track logins
 				val showLoginScript = "python scripts/showLogins.py"
 				val result = Process(showLoginScript).!!
 				val removeU = "u'".toSet
