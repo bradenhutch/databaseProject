@@ -24,7 +24,6 @@ case class Review(Id: Option[Long], productId: Long, reviewDate: String, author:
 	reviewText: String) {
 
 	def create(implicit db:java.sql.Connection) = {
-		println("######################################")
 		//SQL("INSERT INTO Address (productId, reviewDate, author, reviewText) 
 			// VALUES ({productId}, {reviewDate}, {author}, {reviewText});").on('productId -> productId,
 			// 'reviewDate -> reviewDate, 'author -> author, 'reviewText -> reviewText).executeInsert()

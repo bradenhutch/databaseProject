@@ -54,10 +54,9 @@ case class ProductController @Inject()(db: Database, cc: ControllerComponents) e
 			val productStock = productStockString.toInt
 			//Connect to the database and run the create query
 			implicit val conn = db.getConnection()
-			val user = Product(None, productName, productPrice, productImageLocation, productColor, 
+			val product = Product(None, productName, productPrice, productImageLocation, productColor, 
 			productMaterial, productDimensions, productWeight, productStock, 
 			productDescription).create
-			println("*********************************************************")
 			conn.close()
 			Ok(views.html.index("Product registered."))
 		})

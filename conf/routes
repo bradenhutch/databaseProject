@@ -2,17 +2,21 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# An example controller showing a sample home page
+# Home page
+
 GET		/						controllers.HomeController.index
 
 # Map static resources from the /public folder to the /assets URL path
+
 GET		/assets/*file			controllers.Assets.versioned(path="/public", file: Asset)
 
 # Controller for admin page and other pages
+
 GET		/admin					controllers.AdminController.index
 GET		/user 					controllers.UserController.index
 	
 # Functions for creating and deleting products/users
+
 +nocsrf
 POST	/newProduct				controllers.ProductController.create
 +nocsrf
@@ -23,14 +27,21 @@ POST	/deleteProduct			controllers.ProductController.delete
 POST	/deleteUser				controllers.UserController.delete
 
 # Address stuff
+
 +nocsrf
 POST 	/newAddress				controllers.AddressController.create
 
 # Payment stuff
+
 +nocsrf
 POST 	/newPaypal				controllers.PaymentMethodController.createPaypal
 +nocsrf
 POST 	/newCreditCard			controllers.PaymentMethodController.createCreditCard
+
+# Order stuff
+
++nocsrf
+POST 	/newOrder				controllers.OrderController.create
 
 # Login stuff
 
@@ -40,5 +51,6 @@ POST	/login 					controllers.HomeController.postLogin
 GET		/logout					controllers.HomeController.logout
 
 # Clear logins
+
 +nocsrf
 POST 	/clearLogins			controllers.AdminController.clearLogins

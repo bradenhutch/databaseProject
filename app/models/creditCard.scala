@@ -24,7 +24,6 @@ import javax.inject._
 case class CreditCard(Id: Option[Long], paymentId: Long, cardNumber: Long, expirationDate: String, CVV: Long) {
 
 	def create(implicit db:java.sql.Connection) = {
-		println("######################################")
 		SQL("""
 			INSERT INTO credit_card (paymentId, cardNumber, expirationDate, CVV) 
 			VALUES ({paymentId}, {cardNumber}, {expirationDate},{CVV});

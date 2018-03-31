@@ -30,7 +30,6 @@ case class User(Id: Option[Long], username: String, phoneNumber: String, firstNa
 	lastName: String, email: String, password: String, gender: String, admin: Boolean) {
 
 	def create(implicit db:java.sql.Connection) = {
-		println("######################################")
 		SQL("""
 			INSERT INTO user (username, phoneNumber, firstName, lastName, email, password, gender, 
 			admin) VALUES ({username}, {phoneNumber}, {firstName}, {lastName}, {email}, {password}, 

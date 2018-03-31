@@ -1,4 +1,4 @@
-@(allProducts: List[Product], allAddresses: List[Address], allPaypal: List[(Long, Long, String)], allCreditCards: List[(Long, Long, Long)], username: String, userId: Long)
+@(allProducts: List[Product], allAddresses: List[Address], allPaypal: List[(Long, Long, String)], allCreditCards: List[(Long, Long, Long)], allOrders: List[Orders], username: String, userId: Long)
 
 @main("User Page"){
 
@@ -20,7 +20,7 @@
 			<th>ID</th>
 			<th>Name</th>
 			<th>Price</th>
-			<th>Image Location</th>
+			<th>Image</th>
 			<th>Color</th>
 			<th>Material</th>
 			<th>Dimensions</th>
@@ -29,11 +29,13 @@
 			<th>Description</th>
 		</tr>
 	@for(allProducts <- allProducts) {
+
+		@defining("images/".concat(allProducts.imageLocation)) { path=>
 		<tr>
 			<td>@allProducts.Id</td>
 			<td>@allProducts.name</td>
-			<td>@allProducts.price</td>
-			<td>@allProducts.imageLocation</td>
+			<td>$@allProducts.price</td>
+			<td><img src="@routes.Assets.versioned(path)"></td>
 			<td>@allProducts.color</td>
 			<td>@allProducts.material</td>
 			<td>@allProducts.dimensions</td>
@@ -41,6 +43,7 @@
 			<td>@allProducts.currentStock</td>
 			<td>@allProducts.description</td>
 		</tr>
+		}
 	}
 	</table>
 </div>
@@ -140,5 +143,54 @@
 		<br>
 		<input type="submit" />
 	</form>
+</div>
+
+<div class="myOrders">
+	<h3>My Orders</h3>
+	<table>
+		<tr>
+			<th>Date</th>
+			<th>Shipping Address ID</th>
+			<th>Billling Address ID</th>
+			<th>Payment ID</th>
+			<th>Subtotal</th>
+			<th>Tax</th>
+			<th>Total</th>
+		</tr>
+	@for(allOrders <- allOrders) {
+		<tr>
+			<td>@allOrders.createdDate</td>
+			<td>@allOrders.shippingAddId</td>
+			<td>@allOrders.billingAddId</td>
+			<td>@allOrders.paymentId</td>
+			<td>@allOrders.subtotal</td>
+			<td>@allOrders.tax</td>
+			<td>@allOrders.total</td>
+		</tr>
+	}
+	</table>
+</div>
+
+<div class="newOrder">
+	<h3>New Order</h3>
+	<p>For now, you can only order one type of item at a time, but feel free to order as many as you'd like.</p>
+	<form method="POST" action="@routes.OrderController.create">
+		<input name="userId" value="@userId" type="hidden" />
+		Product Id
+		<input name="productId" type="text" />
+		<br>
+		Quantity
+		<input name="quantity" type="text" />
+		<br>
+		Payment Method Id
+		<input name="paymentId" type="text" />
+		<br>
+		Shipping Address Id
+		<input name="shipAddId" type="text" />
+		<br>
+		Billing Address Id
+		<input name="billAddId" type="text" />
+		<br>
+		<input type="submit" />
 </div>
 }

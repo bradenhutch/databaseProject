@@ -48,7 +48,6 @@ class PaymentMethodController @Inject()(db: Database, cc: ControllerComponents) 
 
 		val paypal = Paypal(None, paymentId, paypalEmail).create
 
-		println("*********************************************************")
 		conn.close()
 		Ok(views.html.index("New paypal added!"))
 	}

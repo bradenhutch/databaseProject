@@ -27,7 +27,6 @@ case class Address(Id: Option[Long], userId: Long, streetNumber: String, zipCode
 
 
 	def create(implicit db:java.sql.Connection) = {
-		println("######################################")
 		SQL("""
 			INSERT INTO address (userId, streetNumber, zipCode, city) 
 			VALUES ({userId}, {streetNumber}, {zipCode}, {city});

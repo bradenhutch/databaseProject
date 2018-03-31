@@ -49,8 +49,9 @@ CREATE TABLE orders (
 	userId			BIGINT NOT NULL,
 	shippingAddId		BIGINT NOT NULL,
 	billingAddId		BIGINT NOT NULL,
-	createdDate		VARCHAR(255) NOT NULL,
-	shippedDate		VARCHAR(255) NOT NULL,
+	paymentId		BIGINT NOT NULL,
+	createdDate		DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	productOrderId		BIGINT NOT NULL,
 	subtotal		DECIMAL(8,2) NOT NULL,
 	tax			DECIMAL(8,2) NOT NULL,
 	total			DECIMAL(8,2) NOT NULL,
@@ -81,16 +82,11 @@ CREATE TABLE review (
 );
 
 CREATE TABLE order_products (
-	Id			BIGINT(255) NOT NULL,
+	Id			BIGINT(255) NOT NULL AUTO_INCREMENT,
 	productId		BIGINT NOT NULL,
 	quantity		BIGINT NOT NULL,
 	PRIMARY KEY(Id)
 );
-
-CREATE TRIGGER priceCheck
-BEFORE INSERT ON product
-FOR EACH ROW IF NEW.price < 0 THEN SET NEW.price = 0;
-END IF;
 
 # --- !Downs
 
@@ -103,4 +99,3 @@ DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS review;
 DROP TABLE IF EXISTS order_products;
-DROP TRIGGER IF EXISTS priceCheck;

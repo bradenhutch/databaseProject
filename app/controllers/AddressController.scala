@@ -45,7 +45,6 @@ class AddressController @Inject()(db: Database, cc: ControllerComponents) extend
 			//Connect to the database and run the create query
 			implicit val conn = db.getConnection()
 			val address = Address(None, usId, streetNumber, zCode, city).create
-			println("*********************************************************")
 			conn.close()
 			Ok(views.html.index("Address registered."))
 		}

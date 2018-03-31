@@ -13,7 +13,6 @@ class ReviewController @Inject()(db: Database, cc: ControllerComponents) extends
   def create = Action {
   	implicit val conn = db.getConnection()
   	//val user = Review().create
-  	println("*********************************************************")
   	conn.close()
   	Ok
   }

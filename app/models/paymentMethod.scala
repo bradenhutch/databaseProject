@@ -22,7 +22,6 @@ import javax.inject._
 case class PaymentMethod(Id: Option[Long], userId: Long) {
 
 	def create(implicit db:java.sql.Connection) = {
-		println("######################################")
 		SQL("""
 			INSERT INTO payment_method (userId) VALUES ({userId});
 			""").on('userId -> userId).executeInsert();

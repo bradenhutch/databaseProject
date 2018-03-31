@@ -32,7 +32,6 @@ case class Product(Id: Option[Long], name: String, price: BigDecimal, imageLocat
 	description: String) {
 
 	def create(implicit db:java.sql.Connection) = {
-		println("######################################")
 		SQL("""
 			INSERT INTO product (name, price, imageLocation, color, material, 
 			dimensions, weight, currentStock, description) VALUES ({name}, {price}, 

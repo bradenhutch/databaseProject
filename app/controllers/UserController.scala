@@ -31,10 +31,12 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 			val allAddresses = Address.returnAllForUser(conn, userId)
 			val allPaypal = Paypal.returnAllForUser(conn, userId)
 			val allCreditCards = CreditCard.returnAllForUserShort(conn, userId)
+			val allOrders = Orders.returnAllForUser(conn, userId)
 
 			conn.close()
 
-			Ok(views.html.user(allProducts, allAddresses, allPaypal, allCreditCards, username, userId))
+			Ok(views.html.user(allProducts, allAddresses, allPaypal, allCreditCards, allOrders, 
+				username, userId))
 		} else {
 			Ok(views.html.login())
 		}
@@ -79,7 +81,6 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 		  	implicit val conn = db.getConnection()
 			val user = User(None, username, userPhoneNumber, userFirstName, userLastName, userEmail, 
 			userPassword, userGender, userAdmin).create
-			println("*********************************************************")
 			conn.close()
 			Ok(views.html.index("Successfully added new user"))
 		})

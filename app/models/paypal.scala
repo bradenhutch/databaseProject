@@ -22,7 +22,6 @@ import javax.inject._
 case class Paypal(Id: Option[Long], paymentId: Long, paypalEmail: String) {
 
 	def create(implicit db:java.sql.Connection) = {
-		println("######################################")
 		SQL("""
 			INSERT INTO paypal (paymentId, paypalEmail) VALUES ({paymentId}, {paypalEmail});
 			""").on('paymentId -> paymentId, 'paypalEmail -> paypalEmail).executeInsert()
