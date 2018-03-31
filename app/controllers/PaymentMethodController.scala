@@ -83,7 +83,6 @@ class PaymentMethodController @Inject()(db: Database, cc: ControllerComponents) 
 
 				val creditCard = CreditCard(None, paymentId, cNumber, expirationDate, cvvLong).create
 
-				println("*********************************************************")
 				conn.close()
 				Ok(views.html.index("New credit card added!"))
 			} catch {
