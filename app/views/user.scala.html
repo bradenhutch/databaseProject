@@ -48,6 +48,32 @@
 	</table>
 </div>
 
+<div class="displayReviews">
+	<h3>Reviews</h3>
+	<table>
+		<tr>
+			<th>Review ID</th>
+			<th>Product ID</th>
+			<th>User ID</th>
+			<th>Review Text</th>
+		</tr>
+	</table>
+</div>
+
+<div class="newReview">
+	<h3>New Review</h3>
+	<form method="POST" action="@routes.ReviewController.create">
+		<input name="userId" value="@userId" type="hidden" />
+		Product ID
+		<input name="productId" value="" type="text" />
+		<br>
+		Review Text
+		<textarea name="reviewText" rows="4" cols="50"></textarea>
+		<br>
+		<input type="submit" />
+	</form>
+</div>
+
 <div class="displayAddresses">
 	<h3>My Addresses</h3>
 	<table>
@@ -71,16 +97,16 @@
 <div class="newAddress">
 	<h3>New Address</h3>
 	<form method="POST" action="@routes.AddressController.create">
-			<input name="userId" value="@userId" type="hidden" />
-			Street Number
-			<input name="streetNumber" value="" type="text" />
-			<br>
-			Zip Code
-			<input name="zipCode" value="" type="text" />
-			<br>
-			City
-			<input name="city" value="" type="text" />
-			<br>
+		<input name="userId" value="@userId" type="hidden" />
+		Street Number
+		<input name="streetNumber" value="" type="text" />
+		<br>
+		Zip Code
+		<input name="zipCode" value="" type="text" />
+		<br>
+		City
+		<input name="city" value="" type="text" />
+		<br>
 		<input type="submit" />
 	</form>
 </div>

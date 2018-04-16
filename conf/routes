@@ -54,3 +54,8 @@ GET		/logout					controllers.HomeController.logout
 
 +nocsrf
 POST 	/clearLogins			controllers.AdminController.clearLogins
+
+# Reviews Stufff
+
++nocsrf
+POST 	/createRevview			controllers.ReviewController.create
