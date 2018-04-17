@@ -1,9 +1,9 @@
-@(allProducts: List[Product], allUsers: List[User], productCount: Long, logins: String)
+@(allProducts: List[Product], allUsers: List[User], productCount: Long, logins: String, mySqlLog: String, mySqlStatus: String, mongoLog: String, mongoStatus: String, elasticLog: String, elasticStatus: String)
 
 @main("Admin Page"){
 
 <div>
-	<h1>Admin Page</h1>
+	<h3>Admin Page</h3>
 </div>
 
 <div>
@@ -176,4 +176,19 @@
 		<input type="submit" value="Create Backup" />
 	</form>
 </div>
+
+<div class="databaseInfo">
+	<h1>Database Logs & Status</h1>
+	<h3>MySql Status</h3>
+	@mySqlStatus
+	<h3>MySql Logs</h3>
+	@mySqlLog
+	<h3>MongoDB Status</h3>
+	@mongoStatus
+	<h3>MongoDB Logs</h3>
+	@mongoLog
+	<h3>Elasticsearch Status</h3>
+	@elasticStatus
+	<h3>Elasticsearch Logs</h3>
+	@elasticLog
 }

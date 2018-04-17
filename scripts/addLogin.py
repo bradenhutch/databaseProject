@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from pymongo import MongoClient
 import datetime
 import sys

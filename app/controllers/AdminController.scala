@@ -38,7 +38,15 @@ class AdminController @Inject()(db: Database, cc: ControllerComponents) extends 
 				val removeCommas = ",,".toSet
 				val logins = result.toString.filterNot(removeU).filterNot(removeCommas)
 
-				Ok(views.html.admin(allProducts, allUsers, productCount, logins))
+				//Run the bash scripts to get the database logs and status
+				val mySqlLog = Process("bash scripts/mySqlLog.sh").!!
+				val mySqlStatus = Process("bash scripts/mySqlStatus.sh").!!
+				val mongoLog = Process("bash scripts/mongoLog.sh").!!
+				val mongoStatus = Process("bash scripts/mongoStatus.sh").!!
+				val elasticLog = Process("bash scripts/elasticLog.sh").!!
+				val elasticStatus = Process("bash scripts/elasticStatus.sh").!!
+
+				Ok(views.html.admin(allProducts, allUsers, productCount, logins, mySqlLog, mySqlStatus, mongoLog, mongoStatus, elasticLog, elasticStatus))
 			} else {
 				Ok(views.html.index("You are not authorized"))
 			}

@@ -11,6 +11,8 @@ for arg in $@; do
 	fi
 done
 
-createReview="curl -X POST 'http://localhost:9200/reviews/_doc?pretty&pretty' -H 'Content-Type: application/json' -d '{\"product_review\": { \"product_id\": \"$2\",\"user_id\": \"$1\",\"review_text\": \"${reviewText:1}\"}}'"
+reviewText="$(echo $reviewText | sed -e 's|["'\'']||g')"
+
+createReview="curl -X POST 'http://localhost:9200/reviews/_doc?pretty&pretty' -H 'Content-Type: application/json' -d '{\"product_review\": { \"product_id\": \"$2\",\"user_id\": \"$1\",\"review_text\": \"$reviewText\"}}'"
 
 eval $createReview
