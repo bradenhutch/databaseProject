@@ -11,6 +11,8 @@ import anorm._
 import models._
 import org.apache.commons.codec.digest.DigestUtils
 import sys.process._
+import play.api.libs.functional.syntax._
+import play.api.libs.json._
 
 @Singleton
 case class UserController @Inject()(db: Database, cc: ControllerComponents) extends AbstractController(cc) {
@@ -33,9 +35,13 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 			val allCreditCards = CreditCard.returnAllForUserShort(conn, userId)
 			val allOrders = Orders.returnAllForUser(conn, userId)
 
+			//Use bash to return the contents of the elasticsearch db as a JSON
+			val returnScript = "bash scripts/returnAllReviews.sh"
+			val reviewString = Process(returnScript).!!
+
 			conn.close()
 
-			Ok(views.html.user(allProducts, allAddresses, allPaypal, allCreditCards, allOrders, 
+			Ok(views.html.user(reviewString, allProducts, allAddresses, allPaypal, allCreditCards, allOrders, 
 				username, userId))
 		} else {
 			Ok(views.html.login())
@@ -86,7 +92,7 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 		})
 	}
 
-	def delete = Action(parse.urlFormEncoded) { implicit request =>
+	def delete = Action(parse.formUrlEncoded) { implicit request =>
 		
 		//Check to see if the input is an int
 		try {

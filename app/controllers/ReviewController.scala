@@ -18,15 +18,29 @@ class ReviewController @Inject()(db: Database, cc: ControllerComponents) extends
   def create = Action(parse.formUrlEncoded) { implicit request =>
   	
   	//Extract all of the values from the from
-  	val userId = request.body("userId")(0)
-  	val productId = request.body("productId")(0)
-  	val reviewText = request.body("reviewText")(0)
+  	val userId = request.body("userId")(0).toString
+  	val productId = request.body("productId")(0).toString
+  	val reviewText = request.body("reviewText")(0).toString
 
-  	val createScriptPath = "bash scripts/createReview.sh " + userId.toString() + " " + productId.toString() + " " + reviewText.toString()
+    //Run the bash script to use elasticsearch
+  	val createScriptPath = "bash scripts/createReview.sh " + userId + " " + productId + " " + reviewText
 
   	Process(createScriptPath).!
 
-  	Ok
+  	Ok(views.html.index("Thank you for your review"))
+  }
+
+  def deleteOne = Action (parse.formUrlEncoded) { implicit request =>
+
+    //Extract all of the values from the form
+    val reviewId = request.body("reviewId")(0)
+
+    //Run the bash script to use elasticsearch
+    val deleteScript = "bash scripts/deleteReview.sh " + reviewId
+
+    Process(deleteScript).!
+
+    Ok(views.html.index("Review deleted"))
   }
 
 }

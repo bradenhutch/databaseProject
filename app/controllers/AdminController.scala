@@ -55,4 +55,16 @@ class AdminController @Inject()(db: Database, cc: ControllerComponents) extends 
 		Ok(views.html.index("Login history cleared"))
 	}
 
+	def backupDBs = Action {
+		val backupElastic = "bash scripts/backupElastic.sh"
+		val backupMongo = "mongodump"
+		val backupMySQL = "python scripts/backupMySql.py"
+
+		Process(backupElastic).!
+		Process(backupMongo).!
+		Process(backupMySQL).!
+
+		Ok(views.html.index("Database backups created"))
+	}
+
 }

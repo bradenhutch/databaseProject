@@ -1,4 +1,4 @@
-@(allProducts: List[Product], allAddresses: List[Address], allPaypal: List[(Long, Long, String)], allCreditCards: List[(Long, Long, Long)], allOrders: List[Orders], username: String, userId: Long)
+@(reviewString: String, allProducts: List[Product], allAddresses: List[Address], allPaypal: List[(Long, Long, String)], allCreditCards: List[(Long, Long, Long)], allOrders: List[Orders], username: String, userId: Long)
 
 @main("User Page"){
 
@@ -50,14 +50,7 @@
 
 <div class="displayReviews">
 	<h3>Reviews</h3>
-	<table>
-		<tr>
-			<th>Review ID</th>
-			<th>Product ID</th>
-			<th>User ID</th>
-			<th>Review Text</th>
-		</tr>
-	</table>
+	@reviewString
 </div>
 
 <div class="newReview">
@@ -70,6 +63,16 @@
 		Review Text
 		<textarea name="reviewText" rows="4" cols="50"></textarea>
 		<br>
+		<input type="submit" />
+	</form>
+</div>
+
+<div class="deleteReview">
+	<h3>Delete Review</h3>
+	<form method="POST" action="@routes.ReviewController.deleteOne">
+		Type the "_id" of the review you want to delete
+		<br>
+		<input name="reviewId" value="" type="text" />
 		<input type="submit" />
 	</form>
 </div>

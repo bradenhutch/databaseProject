@@ -58,4 +58,11 @@ POST 	/clearLogins			controllers.AdminController.clearLogins
 # Reviews Stufff
 
 +nocsrf
-POST 	/createRevview			controllers.ReviewController.create
+POST 	/createReview			controllers.ReviewController.create
++nocsrf
+POST 	/deleteOneReview 		controllers.ReviewController.deleteOne
+
+# Database backups
+
++nocsrf
+POST 	/updateDBs				controllers.AdminController.backupDBs
