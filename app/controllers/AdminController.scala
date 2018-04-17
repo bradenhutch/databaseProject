@@ -32,19 +32,19 @@ class AdminController @Inject()(db: Database, cc: ControllerComponents) extends 
 				conn.close()
 
 				//Run the python script to track logins
-				val showLoginScript = "python scripts/showLogins.py"
+				val showLoginScript = "python ../../scripts/showLogins.py"
 				val result = Process(showLoginScript).!!
 				val removeU = "u'".toSet
 				val removeCommas = ",,".toSet
 				val logins = result.toString.filterNot(removeU).filterNot(removeCommas)
 
 				//Run the bash scripts to get the database logs and status
-				val mySqlLog = Process("bash scripts/mySqlLog.sh").!!
-				val mySqlStatus = Process("bash scripts/mySqlStatus.sh").!!
-				val mongoLog = Process("bash scripts/mongoLog.sh").!!
-				val mongoStatus = Process("bash scripts/mongoStatus.sh").!!
-				val elasticLog = Process("bash scripts/elasticLog.sh").!!
-				val elasticStatus = Process("bash scripts/elasticStatus.sh").!!
+				val mySqlLog = Process("bash ../../scripts/mySqlLog.sh").!!
+				val mySqlStatus = Process("bash ../../scripts/mySqlStatus.sh").!!
+				val mongoLog = Process("bash ../../scripts/mongoLog.sh").!!
+				val mongoStatus = Process("bash ../../scripts/mongoStatus.sh").!!
+				val elasticLog = Process("bash ../../scripts/elasticLog.sh").!!
+				val elasticStatus = Process("bash ../../scripts/elasticStatus.sh").!!
 
 				Ok(views.html.admin(allProducts, allUsers, productCount, logins, mySqlLog, mySqlStatus, mongoLog, mongoStatus, elasticLog, elasticStatus))
 			} else {
@@ -57,16 +57,16 @@ class AdminController @Inject()(db: Database, cc: ControllerComponents) extends 
 	}
 
 	def clearLogins = Action {
-		val clearLoginScript = "python scripts/clearLogins.py"
+		val clearLoginScript = "python ../../scripts/clearLogins.py"
 		Process(clearLoginScript).!
 
 		Ok(views.html.index("Login history cleared"))
 	}
 
 	def backupDBs = Action {
-		val backupElastic = "bash scripts/backupElastic.sh"
+		val backupElastic = "bash ../../scripts/backupElastic.sh"
 		val backupMongo = "mongodump"
-		val backupMySQL = "python scripts/backupMySql.py"
+		val backupMySQL = "python ../../scripts/backupMySql.py"
 
 		Process(backupElastic).!
 		Process(backupMongo).!

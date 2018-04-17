@@ -28,7 +28,7 @@ class HomeController @Inject()(db: Database, cc: ControllerComponents) extends A
 		val username = request.body("username")(0)
 		val password = DigestUtils.sha256Hex(request.body("password")(0))
 		//The script to track logins in mongodb
-		val addLoginScript = "python scripts/addLogin.py " + username
+		val addLoginScript = "python ../../scripts/addLogin.py " + username
 
 		implicit val conn = db.getConnection()
 		val loginAttempt = User.returnOneByUserPass(conn, username, password)

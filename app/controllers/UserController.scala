@@ -36,7 +36,7 @@ case class UserController @Inject()(db: Database, cc: ControllerComponents) exte
 			val allOrders = Orders.returnAllForUser(conn, userId)
 
 			//Use bash to return the contents of the elasticsearch db as a JSON
-			val returnScript = "bash scripts/returnAllReviews.sh"
+			val returnScript = "bash ../../scripts/returnAllReviews.sh"
 			val reviewString = Process(returnScript).!!
 
 			conn.close()

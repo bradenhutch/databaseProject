@@ -23,7 +23,7 @@ class ReviewController @Inject()(db: Database, cc: ControllerComponents) extends
   	val reviewText = request.body("reviewText")(0).toString
 
     //Run the bash script to use elasticsearch
-  	val createScriptPath = "bash scripts/createReview.sh " + userId + " " + productId + " " + reviewText
+  	val createScriptPath = "bash ../../scripts/createReview.sh " + userId + " " + productId + " " + reviewText
 
   	Process(createScriptPath).!
 
@@ -36,7 +36,7 @@ class ReviewController @Inject()(db: Database, cc: ControllerComponents) extends
     val reviewId = request.body("reviewId")(0)
 
     //Run the bash script to use elasticsearch
-    val deleteScript = "bash scripts/deleteReview.sh " + reviewId
+    val deleteScript = "bash ../../scripts/deleteReview.sh " + reviewId
 
     Process(deleteScript).!
 
